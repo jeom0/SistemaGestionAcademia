@@ -26,3 +26,5 @@ Thumbs.db
 .idea/
 database/*.sqlite
 database/*.sqlite-journal
+*.zip
+*.rar
