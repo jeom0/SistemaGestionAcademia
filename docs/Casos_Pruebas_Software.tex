@@ -1,0 +1,55 @@
+\documentclass[10pt, a4paper, landscape]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+% Definición de colores basados en la imagen proporcionada
+\definecolor{headerblue}{RGB}{31, 73, 125}
+
+\begin{document}
+
+\section*{\huge \textbf{Plantilla de Casos de Pruebas de Software}}
+{\Large \textbf{Elaborado por:} Antigravity (Asistente IA) \& María Paz} \\
+\textbf{Proyecto:} Sistema de Gestión Academia Conduser \\
+\textbf{Ciclo de Pruebas:} Pruebas de Integración y Funcionalidad Básica (MVP)
+
+\vspace{0.5cm}
+
+\renewcommand{\arraystretch}{1.8}
+\begin{tabularx}{\textwidth}{|c|X|X|c|c|c|}
+\hline
+\rowcolor{headerblue} 
+\textcolor{white}{\textbf{Id}} & 
+\textcolor{white}{\textbf{Caso de Prueba}} & 
+\textcolor{white}{\textbf{Descripción}} & 
+\textcolor{white}{\textbf{Fecha}} & 
+\textcolor{white}{\textbf{Área Funcional / Sub proceso}} & 
+\textcolor{white}{\textbf{Funcionalidad / Característica}} \\
+\hline
+CP-001 & Inicio de Sesión Exitoso (Root) & Verificar que el usuario root pueda acceder al sistema ingresando email y contraseña válidos. Se espera redirección al Dashboard Root. & \today & Autenticación y Seguridad & Login / Autenticación \\
+\hline
+CP-002 & Inicio de Sesión Fallido & Verificar que el sistema muestre alerta de error ("Credenciales incorrectas") al ingresar una contraseña o email que no existan en la base de datos. & \today & Autenticación y Seguridad & Manejo de Errores Login \\
+\hline
+CP-003 & Visualización del Dashboard (Root) & Comprobar que el dashboard muestra las tarjetas de métricas actualizadas (total usuarios, activos, inactivos) para el rol root. & \today & Panel Principal (Dashboard) & Visualización de Estadísticas \\
+\hline
+CP-004 & Crear Nuevo Usuario Administrador & Registrar un nuevo usuario asignando el rol 'administrador' desde el panel root y verificar inserción exitosa en la base de datos. & \today & Gestión de Usuarios & CRUD (Crear) \\
+\hline
+CP-005 & Desactivar / Bloquear Usuario & Cambiar el estado de un usuario existente de 'activo' a 'inactivo'. El sistema debe impedir su inicio de sesión posterior. & \today & Gestión de Usuarios & Control de Accesos \\
+\hline
+CP-006 & Registro de Ingreso Financiero & Como administrador, acceder al módulo financiero y registrar un nuevo movimiento de tipo 'ingreso' (monto > 0). & \today & Control Financiero (Movimientos) & Registro (Ingresos) \\
+\hline
+CP-007 & Registro Privado de Egresos & Iniciar sesión como colaborador y registrar un 'egreso'. Verificar que dicho movimiento solo sea visible para su creador y no para otros colaboradores. & \today & Control Financiero (Movimientos) & Registro y Permisos \\
+\hline
+CP-008 & Filtro de Movimientos Financieros & Aplicar un filtro de tipo 'egreso' y un rango de fechas. Validar que la tabla actualice sus resultados excluyendo ingresos. & \today & Reportes y Consultas & Filtros de Búsqueda \\
+\hline
+\end{tabularx}
+
+\vspace{1.5cm}
+\noindent
+\textbf{Resumen de la Ejecución:} Las pruebas listadas en este informe han sido validadas en el entorno local de desarrollo (Laravel 10 + SQLite). Las rutas críticas del sistema (Happy Path) funcionan según lo esperado, y el sistema de roles restringe adecuadamente el acceso a los módulos sensibles.
+\end{document}
