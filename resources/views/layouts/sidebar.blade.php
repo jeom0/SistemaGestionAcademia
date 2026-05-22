@@ -1,4 +1,14 @@
-<aside class="w-72 bg-white border-r border-outline flex flex-col h-screen sticky top-0">
+<aside 
+    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+    class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-outline flex flex-col h-screen transition-transform duration-300 ease-in-out md:sticky md:top-0 md:translate-x-0"
+>
+    <!-- Botón de cerrar barra lateral en móvil -->
+    <div class="md:hidden flex justify-end px-6 pt-4 -mb-4">
+        <button @click="sidebarOpen = false" class="w-8 h-8 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+    </div>
+
     <!-- User Profile Section -->
     <div class="px-8 py-6 flex items-center gap-4">
         <div class="w-12 h-12 rounded-full bg-slate-200 overflow-hidden flex-shrink-0 border border-outline shadow-sm">
