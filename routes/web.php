@@ -18,9 +18,8 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/password/reset', function() {
-    return view('auth.passwords.email');
-})->name('password.request');
+Route::get('/password/reset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/password/reset', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 

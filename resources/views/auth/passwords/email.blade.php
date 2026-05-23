@@ -17,6 +17,12 @@
                 <p class="text-sm text-on-surface-variant font-medium leading-relaxed">
                     Ingresa tu usuario o correo electrónico para recibir instrucciones de recuperación.
                 </p>
+                @if(session('success'))
+                    <div class="mt-2 p-4 bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-2xl text-xs font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary fill-1 text-lg">check_circle</span>
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
 
             <!-- Form -->

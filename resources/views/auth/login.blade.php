@@ -55,13 +55,13 @@
                 </div>
 
                 <!-- Password Field -->
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-2" x-data="{ showPassword: false }">
                     <label class="text-[13px] font-bold text-on-surface-variant ml-1" for="password">Contraseña</label>
                     <div class="relative group">
                         <input class="w-full h-14 px-5 pr-14 rounded-2xl bg-white border border-outline text-secondary focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all @error('password') border-red-500 @enderror" 
-                               id="password" name="password" placeholder="••••••••" type="password" required/>
-                        <button type="button" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                               id="password" name="password" placeholder="••••••••" :type="showPassword ? 'text' : 'password'" required/>
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+                            <span class="material-symbols-outlined text-[20px]" x-text="showPassword ? 'visibility_off' : 'visibility'">visibility</span>
                         </button>
                     </div>
                     @error('password')
@@ -88,24 +88,6 @@
                 <button class="w-12 h-12 bg-white border border-outline rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-all shadow-md group">
                     <span class="material-symbols-outlined text-[24px]">help</span>
                 </button>
-            </div>
-        </div>
-
-        <!-- Root Credentials Info (For Testing Only) -->
-        <div class="mt-12 p-6 bg-white rounded-3xl border border-outline w-full max-w-sm hidden md:block">
-            <div class="flex items-center gap-2 text-primary font-bold text-[11px] uppercase tracking-widest mb-3">
-                <span class="material-symbols-outlined text-sm">lock_open</span>
-                Acceso Administrador Root
-            </div>
-            <div class="flex flex-col gap-1 text-[11px] text-on-surface-variant">
-                <div class="flex justify-between border-b border-surface-variant pb-1">
-                    <span class="font-bold">Usuario:</span>
-                    <span>conduserroot@gmail.com</span>
-                </div>
-                <div class="flex justify-between pt-1">
-                    <span class="font-bold">Password:</span>
-                    <span>Conduser@2005</span>
-                </div>
             </div>
         </div>
     </div>
