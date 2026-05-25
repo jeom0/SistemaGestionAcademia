@@ -5,25 +5,25 @@
 @section('content')
 <div class="min-h-screen flex flex-col lg:flex-row antialiased" x-data="{ helpModalOpen: false }">
     <!-- Image / Branding Column -->
-    <div class="w-full lg:w-[55%] h-[40vh] sm:h-[45vh] lg:h-auto lg:min-h-screen relative overflow-hidden shrink-0">
+    <div class="w-full lg:w-[55%] min-h-[35vh] sm:min-h-[40vh] lg:h-auto relative overflow-hidden shrink-0">
         <!-- Base Background (Green waves) -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         
         <!-- Abstract shadow mask to integrate UI premium texture -->
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
 
-        <!-- Smooth gradient transition: Only for desktop right fade -->
-        <div class="absolute inset-0 hidden lg:block bg-gradient-to-r from-transparent via-surface/20 to-surface z-20 pointer-events-none"></div>
+        <!-- Smooth gradient transition: Bottom fade for mobile, Right fade for desktop -->
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/10 lg:via-surface/20 to-surface z-20 pointer-events-none"></div>
 
         <!-- Overlay Background -->
-        <div class="absolute inset-0 bg-contain lg:bg-cover bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
+        <div class="absolute inset-0 bg-contain lg:bg-cover bg-center lg:bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
         
-        <!-- Desktop specific soft gradient edge -->
-        <div class="absolute inset-0 hidden lg:block bg-gradient-to-r from-transparent via-transparent to-surface z-40 pointer-events-none"></div>
+        <!-- Additional gradient ON TOP of everything -->
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/30 lg:via-transparent to-surface z-40 pointer-events-none"></div>
     </div>
 
     <!-- Right Column: Login Form -->
-    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-12 sm:-mt-16 lg:-ml-0 lg:mt-0 rounded-t-[2.5rem] lg:rounded-none shadow-[0_-15px_30px_rgba(0,0,0,0.1)] lg:shadow-none">
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 lg:-ml-0 -mt-10 lg:mt-0 rounded-t-[3rem] lg:rounded-none">
         <div class="w-full max-w-md">
             <!-- Logo Section (Round) -->
             <div class="flex justify-center mb-12">
