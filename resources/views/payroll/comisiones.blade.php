@@ -11,10 +11,12 @@
             <p class="text-xs md:text-sm text-on-surface-variant font-medium">Gestión y visualización de comisiones y bonos de empleados.</p>
         </div>
         <div class="flex flex-wrap gap-3 relative z-10 w-full md:w-auto">
+            @if(auth()->user()->role !== 'colaborador')
             <a href="{{ route('movements.create') }}" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg transition-all active:scale-[0.98] flex-1 sm:flex-none">
                 <span class="material-symbols-outlined text-[20px] fill-1">add</span>
                 Registrar Comisión
             </a>
+            @endif
         </div>
         <div class="absolute right-0 top-0 h-full w-1/3 bg-primary/5 -skew-x-12 translate-x-1/2"></div>
     </div>

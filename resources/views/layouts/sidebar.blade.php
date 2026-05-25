@@ -43,12 +43,14 @@
                 </a>
             </li>
 
+            @if(auth()->user()->role !== 'colaborador')
             <li>
                 <a href="{{ route('accounts.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('accounts*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
                     <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('accounts*') ? 'fill-1' : '' }}">account_balance</span>
                     <span class="text-sm">Cuentas</span>
                 </a>
             </li>
+            @endif
 
             @if(auth()->user()->isRoot())
             <li>
@@ -59,12 +61,14 @@
             </li>
             @endif
 
+            @if(auth()->user()->role !== 'colaborador')
             <li>
                 <a href="{{ route('reports.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('reports*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
                     <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('reports*') ? 'fill-1' : '' }}">description</span>
                     <span class="text-sm">Reportes</span>
                 </a>
             </li>
+            @endif
 
             <!-- Separador -->
             <li class="px-4 py-2 mt-4">
@@ -85,12 +89,14 @@
                 </a>
             </li>
 
+            @if(auth()->user()->role !== 'colaborador')
             <li class="md:hidden">
                 <a href="{{ route('audit.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('audit*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
                     <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('audit*') ? 'fill-1' : '' }}">admin_panel_settings</span>
                     <span class="text-sm">Auditoría</span>
                 </a>
             </li>
+            @endif
 
             <li>
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('profile*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">

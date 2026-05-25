@@ -71,7 +71,9 @@
 
                         <!-- Enlaces de navegación en escritorio -->
                         <nav class="hidden md:flex items-center gap-4">
+                            @if(auth()->user()->role !== 'colaborador')
                             <a href="{{ route('audit.index') }}" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all {{ request()->routeIs('audit.index') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary' }}">Auditoría</a>
+                            @endif
                             <a href="{{ route('payroll.comisiones') }}" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all {{ request()->routeIs('payroll.comisiones') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary' }}">Comisión</a>
                             <a href="{{ route('payroll.descuentos') }}" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all {{ request()->routeIs('payroll.descuentos') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary' }}">Descuentos</a>
                         </nav>
