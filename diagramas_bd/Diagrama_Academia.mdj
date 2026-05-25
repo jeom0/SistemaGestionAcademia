@@ -1,0 +1,445 @@
+{
+  "_type": "Project",
+  "_id": "ed6339ad-4ca6-4002-891f-2c02907cf00a",
+  "name": "ConduserDB",
+  "ownedElements": [
+    {
+      "_type": "ERDDataModel",
+      "_id": "9a627c95-9a84-45ff-97be-936376364e80",
+      "name": "DataModel",
+      "ownedElements": [
+        {
+          "_type": "ERDDiagram",
+          "_id": "bad30b36-47c1-4dbc-817f-251179974d78",
+          "name": "Conduser ERD",
+          "ownedViews": []
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "551c371a-f296-498a-823f-a1c972bdda55",
+          "name": "users",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "62d315b2-e3c0-418f-9083-8185497bec4a",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "fcd9cf0c-590c-40e3-872f-fd88888316ff",
+              "name": "name",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "d3e1ad61-4430-4575-899a-98a15fd67746",
+              "name": "email",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "d72a4cd9-c9fc-4e33-bcfb-d797bb8ac28e",
+              "name": "password",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "0448d325-aac0-4902-89aa-400a7d47699d",
+              "name": "role",
+              "type": "ENUM",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "9a36eb84-80bd-4c47-9342-8c5f35b43035",
+              "name": "status",
+              "type": "ENUM",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "d44cc48b-251d-4cdb-a171-97ca8eb713b5",
+              "name": "avatar",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "6691c808-b768-437a-aa88-006128f820df",
+          "name": "movements",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "e8c783e8-8aca-4787-9928-0854477872c7",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "f1a7725c-3546-4ab8-addb-0a715cf7cc6e",
+              "name": "amount",
+              "type": "DECIMAL",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "d95c9cd0-fe97-4d41-87f9-bf5f7c862e46",
+              "name": "type",
+              "type": "ENUM",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "f784f4cc-f5bc-4213-9926-6d45f4a9e6e6",
+              "name": "date",
+              "type": "DATE",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "b50cd45b-1bb9-4e55-abba-39bc00287c63",
+              "name": "status",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "176f1c3d-5ddb-4004-8e87-d2d18fd1989f",
+              "name": "description",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "3a34dda1-c216-46b6-a088-7a84756a1ad8",
+              "name": "user_id",
+              "type": "BIGINT",
+              "primaryKey": false,
+              "foreignKey": true,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "7f09a288-3713-41d0-933c-456c20577ea7",
+          "name": "audit_logs",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "0a31d6a9-1e35-4647-a99b-353b128c0999",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "88782aa1-6a18-47f8-a819-388ba6eea8f8",
+              "name": "user_id",
+              "type": "BIGINT",
+              "primaryKey": false,
+              "foreignKey": true,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "92079d3d-c7b0-4031-9443-95967cad802d",
+              "name": "action",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "663a0d83-f2fb-4861-abf7-07ffe17f6e2a",
+              "name": "model_type",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "50b26046-535f-48ce-9a6c-83b80b373c5a",
+              "name": "model_id",
+              "type": "BIGINT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "cf04616f-aed3-42cd-9c5e-2e0d3339f832",
+              "name": "details",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "703ac6ea-729f-4367-8a73-e33ba24b8337",
+          "name": "accounts",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "e515737e-92c9-4036-9668-077c28da8644",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "ffbca926-8730-4463-9b3f-e87d65bc4c6b",
+              "name": "created_at",
+              "type": "TIMESTAMP",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "51f22ca1-2e66-42e8-b45f-3246f56768d5",
+          "name": "notifications",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "b5313f80-fd58-49d0-87e3-193e35111640",
+              "name": "id",
+              "type": "CHAR",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "11b87919-e306-463b-8680-7e7c09502ef7",
+              "name": "type",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "7b33ca79-1484-4a5a-b772-02bba66fa53d",
+              "name": "notifiable_type",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "21687fe7-2d09-4079-ade8-efc6c4fc9ebf",
+              "name": "notifiable_id",
+              "type": "BIGINT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "12e1a3d7-d189-459b-9909-89194fcdb7b0",
+              "name": "data",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "b5a68850-3580-407c-848b-126a5291a7d8",
+          "name": "failed_jobs",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "09d20614-6a0d-4bb7-9d70-02cdd9a760f1",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "87063fe0-4831-45ff-b584-8836ad0d2a93",
+              "name": "uuid",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "b91cfd02-9779-41a4-ab82-3b937daea04e",
+              "name": "connection",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "f5f63147-b9f5-487e-b1af-80e2b0fffaf9",
+              "name": "queue",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "c71c836f-f13f-4a27-8d80-fe77bce6cd36",
+              "name": "payload",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "aff9a635-0cbb-43d6-b7fc-ce50e1622297",
+              "name": "exception",
+              "type": "TEXT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "d5f2d838-75ba-4cf1-9a9e-2700fcb9cc24",
+              "name": "failed_at",
+              "type": "TIMESTAMP",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "f138ee95-560c-444f-bab5-d445764d17ee",
+          "name": "personal_access_tokens",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "3ae987ed-d5c1-4400-8587-29de02e01a7f",
+              "name": "id",
+              "type": "BIGINT",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "b16649f3-3f69-41cf-ac69-0f609a3703f2",
+              "name": "tokenable_type",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "1c73c40a-3e95-4d61-80e7-b465466564f5",
+              "name": "tokenable_id",
+              "type": "BIGINT",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "8582bedf-168d-4ff8-b966-4f0711e3179e",
+              "name": "name",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "1c7a89dd-dad3-4e8d-8b44-aab7655c5c56",
+              "name": "token",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        },
+        {
+          "_type": "ERDEntity",
+          "_id": "da390c09-2742-4d71-b30d-3f4713c7b1e6",
+          "name": "password_reset_tokens",
+          "columns": [
+            {
+              "_type": "ERDColumn",
+              "_id": "31cb89bb-6651-44a7-99a8-819a06ec3162",
+              "name": "email",
+              "type": "VARCHAR",
+              "primaryKey": true,
+              "foreignKey": false,
+              "referenceTo": null
+            },
+            {
+              "_type": "ERDColumn",
+              "_id": "e56b9ca4-7a95-46df-a737-79d26e1f4eb7",
+              "name": "token",
+              "type": "VARCHAR",
+              "primaryKey": false,
+              "foreignKey": false,
+              "referenceTo": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
