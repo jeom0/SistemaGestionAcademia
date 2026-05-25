@@ -60,16 +60,27 @@
                     </div>
 
                     <!-- Contraseña Temporal -->
-                    <div class="flex flex-col gap-2 md:col-span-1">
+                    <div class="flex flex-col gap-2">
                         <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Contraseña Temporal</label>
-                        <div class="relative">
-                            <input type="password" name="password" class="w-full h-14 px-5 pr-14 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" placeholder="••••••••" required>
-                            <button type="button" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                        <div class="relative" x-data="{ show: false }">
+                            <input :type="show ? 'text' : 'password'" name="password" class="w-full h-14 px-5 pr-14 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" placeholder="••••••••" required>
+                            <button type="button" @click="show = !show" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[20px]" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
                             </button>
                         </div>
                         <p class="text-[10px] text-on-surface-variant mt-1 ml-1 font-medium">Mínimo 8 caracteres, incluir números y símbolos.</p>
                         @error('password') <span class="text-[10px] text-red-500 font-bold ml-1">{{ $message }}</span> @enderror
+                    </div>
+
+                    <!-- Confirmar Contraseña -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Confirmar Contraseña</label>
+                        <div class="relative" x-data="{ show: false }">
+                            <input :type="show ? 'text' : 'password'" name="password_confirmation" class="w-full h-14 px-5 pr-14 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" placeholder="••••••••" required>
+                            <button type="button" @click="show = !show" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-[20px]" x-text="show ? 'visibility_off' : 'visibility'">visibility</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
