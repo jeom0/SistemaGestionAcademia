@@ -4,9 +4,9 @@
 require __DIR__.'/../vendor/autoload.php';
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-// Iniciar la petición HTTP para poder utilizar Artisan
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$app->boot();
+// Iniciar el Kernel de Consola para poder utilizar Artisan
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+$kernel->bootstrap();
 
 header('Content-Type: text/html; charset=utf-8');
 
