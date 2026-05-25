@@ -3,8 +3,8 @@
 @section('title', 'Movimientos')
 
 @section('content')
-<div class="flex flex-col gap-10 max-w-[1400px] mx-auto">
-    <!-- Header Area (Image 1 Style) -->
+<div class="flex flex-col gap-10 max-w-[1400px] mx-auto" x-data="{ showModal: false }">
+    <!-- Header Area -->
     <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div class="flex flex-col gap-1">
             <h1 class="text-3xl md:text-4xl font-black text-secondary tracking-tight">
@@ -14,77 +14,56 @@
                 {{ request()->query('status') === 'pendiente' ? 'Gestione los registros que aún requieren atención.' : 'Listado completo de todas las transacciones del sistema.' }}
             </p>
         </div>
-        <a href="{{ route('movements.create') }}" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] shrink-0">
+        <button @click="showModal = true" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] shrink-0">
             <span class="material-symbols-outlined text-[20px] fill-1">add</span>
-            Crear
-        </a>
+            Nuevo Movimiento
+        </button>
     </div>
 
     @if(!request()->filled('status'))
-    <!-- Quick Entry Form (Image 1 Style) -->
-    <div class="bg-white border border-outline rounded-[2rem] shadow-sm overflow-hidden">
-        <div class="p-6 md:p-10 flex flex-col gap-8">
-            <form action="{{ route('movements.store') }}" method="POST" class="flex flex-col gap-6">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
-                    <!-- Monto -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Monto</label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
-                            <input type="number" step="0.01" name="amount" class="w-full h-14 pl-8 pr-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-bold" placeholder="0.00" required>
-                        </div>
-                    </div>
-                    <!-- Fecha -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Fecha</label>
-                        <input type="date" name="date" value="{{ date('Y-m-d') }}" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" required>
-                    </div>
-                    <!-- Tipo -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Tipo</label>
-                        <select name="type" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" required>
-                            <option value="">Seleccione...</option>
-                            <option value="ingreso">Ingreso</option>
-                            <option value="egreso">Egreso</option>
-                        </select>
-                    </div>
-                    <!-- Estado -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Estado</label>
-                        <select name="status" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" required>
-                            <option value="completado">Completado</option>
-                            <option value="pendiente">Pendiente</option>
-                        </select>
-                    </div>
-                    <!-- Asocia -->
-                    <div class="flex flex-col gap-2">
-                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Asocia</label>
-                        <select name="associated_to" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none">
-                            <option value="">Cuenta o Entidad</option>
-                            <option value="Banco Principal">Banco Principal</option>
-                            <option value="Caja Chica">Caja Chica</option>
-                        </select>
-                    </div>
-                </div>
+    @php
+        $totalIngresos = $movements->where('type', 'ingreso')->where('status', 'completado')->sum('amount');
+        $totalEgresos = $movements->where('type', 'egreso')->where('status', 'completado')->sum('amount');
+        $balance = $totalIngresos - $totalEgresos;
+    @endphp
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Ingresos -->
+        <div class="bg-white rounded-[2rem] border border-outline p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[28px] text-primary">trending_up</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Total Ingresos</span>
+                <span class="text-2xl font-black text-secondary">${{ number_format($totalIngresos, 0) }}</span>
+            </div>
+        </div>
 
-                <!-- Descripción -->
-                <div class="flex flex-col gap-2">
-                    <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Descripción</label>
-                    <textarea name="description" rows="3" class="w-full p-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium resize-none" placeholder="Detalles del movimiento..." required></textarea>
-                </div>
+        <!-- Egresos -->
+        <div class="bg-white rounded-[2rem] border border-outline p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[28px] text-red-600">trending_down</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Total Egresos</span>
+                <span class="text-2xl font-black text-secondary">${{ number_format($totalEgresos, 0) }}</span>
+            </div>
+        </div>
 
-                <div class="flex justify-end pt-2">
-                    <button type="submit" class="px-8 py-4 bg-secondary text-white rounded-2xl font-black text-sm hover:shadow-xl hover:shadow-secondary/20 transition-all active:scale-[0.98]">
-                        Registrar Movimiento
-                    </button>
-                </div>
-            </form>
+        <!-- Balance -->
+        <div class="bg-white rounded-[2rem] border border-outline p-6 flex items-center gap-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="w-14 h-14 rounded-2xl {{ $balance >= 0 ? 'bg-blue-50' : 'bg-amber-50' }} flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-[28px] {{ $balance >= 0 ? 'text-blue-600' : 'text-amber-600' }}">account_balance</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Balance Neto</span>
+                <span class="text-2xl font-black text-secondary">${{ number_format($balance, 0) }}</span>
+            </div>
         </div>
     </div>
     @endif
 
-    <!-- Recent Movements Table (Image 1/3 Style) -->
+    <!-- Recent Movements Table -->
     <div class="bg-white border border-outline rounded-[2rem] shadow-sm overflow-hidden">
         <div class="p-6 md:p-8 border-b border-outline flex justify-between items-center bg-gray-50/30">
             <h3 class="text-lg md:text-xl font-bold text-secondary">Movimientos Recientes</h3>
@@ -183,6 +162,100 @@
             </div>
         </div>
         @endif
+    </div>
+
+    <!-- Modal for New Movement -->
+    <div x-show="showModal" x-cloak class="fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <!-- Overlay -->
+        <div x-show="showModal" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0"
+             @click="showModal = false"
+             class="absolute inset-0 bg-secondary/60 backdrop-blur-sm"></div>
+
+        <!-- Modal Content -->
+        <div x-show="showModal"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-8 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-8 scale-95"
+             class="relative w-full max-w-2xl bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <div class="p-6 md:p-8 border-b border-outline flex justify-between items-center sticky top-0 bg-white z-10">
+                <h2 class="text-2xl font-black text-secondary">Registrar Movimiento</h2>
+                <button @click="showModal = false" class="w-10 h-10 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-all cursor-pointer">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+                <form action="{{ route('movements.store') }}" method="POST" class="flex flex-col gap-6">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Monto -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Monto</label>
+                            <div class="relative">
+                                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
+                                <input type="number" step="0.01" name="amount" class="w-full h-14 pl-8 pr-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-bold" placeholder="0.00" required>
+                            </div>
+                        </div>
+                        <!-- Fecha -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Fecha</label>
+                            <input type="date" name="date" value="{{ date('Y-m-d') }}" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" required>
+                        </div>
+                        <!-- Tipo -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Tipo</label>
+                            <select name="type" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" required>
+                                <option value="">Seleccione...</option>
+                                <option value="ingreso">Ingreso</option>
+                                <option value="egreso">Egreso</option>
+                            </select>
+                        </div>
+                        <!-- Estado -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Estado</label>
+                            <select name="status" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" required>
+                                <option value="completado">Completado</option>
+                                <option value="pendiente">Pendiente</option>
+                            </select>
+                        </div>
+                        <!-- Asocia -->
+                        <div class="flex flex-col gap-2 md:col-span-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Asocia (Cuenta/Entidad)</label>
+                            <select name="associated_to" class="w-full h-14 px-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none">
+                                <option value="">General</option>
+                                <option value="Banco Principal">Banco Principal</option>
+                                <option value="Caja Chica">Caja Chica</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Descripción</label>
+                        <textarea name="description" rows="3" class="w-full p-4 rounded-2xl bg-surface-variant/50 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium resize-none" placeholder="Detalles del movimiento..." required></textarea>
+                    </div>
+
+                    <div class="flex justify-end pt-4 gap-4 sticky bottom-0 bg-white">
+                        <button type="button" @click="showModal = false" class="px-6 py-4 bg-surface-variant text-on-surface-variant rounded-2xl font-bold text-sm hover:bg-outline transition-all">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-8 py-4 bg-primary text-white rounded-2xl font-black text-sm hover:shadow-xl hover:shadow-primary/20 transition-all active:scale-[0.98]">
+                            Guardar Movimiento
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
