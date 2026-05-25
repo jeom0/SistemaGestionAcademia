@@ -66,6 +66,31 @@
                 </a>
             </li>
 
+            <!-- Separador -->
+            <li class="px-4 py-2 mt-4">
+                <span class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">Administración</span>
+            </li>
+
+            <li>
+                <a href="{{ route('payroll.comisiones') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('payroll.comisiones') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
+                    <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('payroll.comisiones') ? 'fill-1' : '' }}">payments</span>
+                    <span class="text-sm">Comisiones</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('payroll.descuentos') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('payroll.descuentos') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
+                    <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('payroll.descuentos') ? 'fill-1' : '' }}">money_off</span>
+                    <span class="text-sm">Descuentos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ route('audit.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('audit*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
+                    <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('audit*') ? 'fill-1' : '' }}">admin_panel_settings</span>
+                    <span class="text-sm">Auditoría</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all {{ request()->routeIs('profile*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary' }}">
                     <span class="material-symbols-outlined text-[22px] {{ request()->routeIs('profile*') ? 'fill-1' : '' }}">settings</span>

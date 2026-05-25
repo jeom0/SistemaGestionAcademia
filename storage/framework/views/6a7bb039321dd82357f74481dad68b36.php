@@ -1,4 +1,14 @@
-<aside class="w-72 bg-white border-r border-outline flex flex-col h-screen sticky top-0">
+<aside 
+    :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+    class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-outline flex flex-col h-screen transition-transform duration-300 ease-in-out md:sticky md:top-0 md:translate-x-0"
+>
+    <!-- Botón de cerrar barra lateral en móvil -->
+    <div class="md:hidden flex justify-end px-6 pt-4 -mb-4">
+        <button @click="sidebarOpen = false" class="w-8 h-8 rounded-full hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">close</span>
+        </button>
+    </div>
+
     <!-- User Profile Section -->
     <div class="px-8 py-6 flex items-center gap-4">
         <div class="w-12 h-12 rounded-full bg-slate-200 overflow-hidden flex-shrink-0 border border-outline shadow-sm">
@@ -57,6 +67,31 @@
                 </a>
             </li>
 
+            <!-- Separador -->
+            <li class="px-4 py-2 mt-4">
+                <span class="text-[10px] font-black text-on-surface-variant uppercase tracking-[0.2em] opacity-60">Administración</span>
+            </li>
+
+            <li>
+                <a href="<?php echo e(route('payroll.comisiones')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all <?php echo e(request()->routeIs('payroll.comisiones') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary'); ?>">
+                    <span class="material-symbols-outlined text-[22px] <?php echo e(request()->routeIs('payroll.comisiones') ? 'fill-1' : ''); ?>">payments</span>
+                    <span class="text-sm">Comisiones</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="<?php echo e(route('payroll.descuentos')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all <?php echo e(request()->routeIs('payroll.descuentos') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary'); ?>">
+                    <span class="material-symbols-outlined text-[22px] <?php echo e(request()->routeIs('payroll.descuentos') ? 'fill-1' : ''); ?>">money_off</span>
+                    <span class="text-sm">Descuentos</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="<?php echo e(route('audit.index')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all <?php echo e(request()->routeIs('audit*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary'); ?>">
+                    <span class="material-symbols-outlined text-[22px] <?php echo e(request()->routeIs('audit*') ? 'fill-1' : ''); ?>">admin_panel_settings</span>
+                    <span class="text-sm">Auditoría</span>
+                </a>
+            </li>
             <li>
                 <a href="<?php echo e(route('profile.edit')); ?>" class="flex items-center gap-3 px-4 py-3 rounded-xl transition-all <?php echo e(request()->routeIs('profile*') ? 'bg-primary-light text-primary font-bold shadow-sm' : 'text-on-surface-variant hover:bg-surface-variant hover:text-secondary'); ?>">
                     <span class="material-symbols-outlined text-[22px] <?php echo e(request()->routeIs('profile*') ? 'fill-1' : ''); ?>">settings</span>

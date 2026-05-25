@@ -5,17 +5,17 @@
 @section('content')
 <div class="flex flex-col gap-10 max-w-[1400px] mx-auto">
     <!-- Header -->
-    <div class="flex justify-between items-center bg-white p-10 rounded-[2.5rem] border border-outline shadow-sm relative overflow-hidden">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-outline shadow-sm relative overflow-hidden">
         <div class="relative z-10 flex flex-col gap-2">
-            <h1 class="text-4xl font-black text-secondary tracking-tight">Mis Gastos</h1>
-            <p class="text-on-surface-variant font-medium">Registro y control personal de egresos en la plataforma.</p>
+            <h1 class="text-2xl md:text-4xl font-black text-secondary tracking-tight">Mis Gastos</h1>
+            <p class="text-xs md:text-sm text-on-surface-variant font-medium">Registro y control personal de egresos en la plataforma.</p>
         </div>
-        <div class="flex gap-4 relative z-10">
-            <a href="{{ route('movements.index') }}" class="h-12 px-6 bg-white border border-outline text-secondary rounded-2xl font-bold hover:bg-surface-variant transition-all flex items-center gap-2">
+        <div class="flex flex-wrap gap-3 relative z-10 w-full md:w-auto">
+            <a href="{{ route('movements.index') }}" class="h-12 px-6 bg-white border border-outline text-secondary rounded-2xl font-bold hover:bg-surface-variant transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
                 <span class="material-symbols-outlined text-[20px]">history</span>
                 Historial
             </a>
-            <button onclick="document.getElementById('amount').focus()" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center gap-2 hover:shadow-lg transition-all active:scale-[0.98]">
+            <button onclick="document.getElementById('amount').focus()" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg transition-all active:scale-[0.98] flex-1 sm:flex-none">
                 <span class="material-symbols-outlined text-[20px] fill-1">add</span>
                 Nuevo Egreso
             </button>

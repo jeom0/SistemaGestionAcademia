@@ -3,29 +3,13 @@
 @section('title', 'Iniciar Sesión')
 
 @section('content')
-<div class="min-h-screen flex antialiased">
-    <!-- Left Column: Branding (Image 4 Style) -->
-    <div class="hidden lg:flex w-[55%] bg-[#e9edff] relative flex-col items-center justify-center overflow-hidden border-r border-outline">
-        <!-- Abstract road/curve decorations -->
-        <div class="absolute bottom-0 left-0 w-full h-[40%] bg-white/30 backdrop-blur-3xl rounded-t-[100%] scale-150 translate-y-1/2"></div>
-        
-        <div class="relative z-10 flex flex-col items-center gap-6">
-            <!-- Icon Box -->
-            <div class="w-20 h-20 bg-primary rounded-3xl flex items-center justify-center shadow-2xl shadow-primary/20">
-                <span class="material-symbols-outlined text-white text-[40px] fill-1">directions_car</span>
-            </div>
-            
-            <div class="text-center">
-                <h1 class="text-5xl font-black text-secondary tracking-tight">Conduser</h1>
-                <p class="text-on-surface-variant mt-4 max-w-xs mx-auto leading-relaxed font-medium">
-                    Plataforma integral para la gestión profesional de flotas y conductores.
-                </p>
-            </div>
-        </div>
-        
-        <!-- Decorative elements from mockup -->
-        <div class="absolute top-1/4 left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-1/4 right-10 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl"></div>
+<div class="min-h-screen flex antialiased" x-data="{ helpModalOpen: false }">
+    <!-- Left Column: Branding with Beautiful Vector Illustration (Image mockup cover) -->
+    <div class="hidden lg:flex w-[55%] relative flex-col items-center justify-center overflow-hidden border-r border-outline bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');">
+        <!-- Abstract shadow mask to integrate UI premium texture -->
+        <div class="absolute inset-0 bg-emerald-950/5"></div>
+        <!-- Smooth white gradient transition at the right edge to integrate with form -->
+        <div class="absolute inset-y-0 right-0 w-32 bg-gradient-to-r from-transparent to-surface"></div>
     </div>
 
     <!-- Right Column: Login Form -->
@@ -60,8 +44,8 @@
                     <div class="relative group">
                         <input class="w-full h-14 px-5 pr-14 rounded-2xl bg-white border border-outline text-secondary focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all @error('password') border-red-500 @enderror" 
                                id="password" name="password" placeholder="••••••••" :type="showPassword ? 'text' : 'password'" required/>
-                        <button type="button" @click="showPassword = !showPassword" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
-                            <span class="material-symbols-outlined text-[20px]" x-text="showPassword ? 'visibility_off' : 'visibility'">visibility</span>
+                        <button type="button" @click="showPassword = !showPassword" class="absolute right-0 top-0 h-full px-5 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined x-text" x-text="showPassword ? 'visibility_off' : 'visibility'">visibility</span>
                         </button>
                     </div>
                     @error('password')
@@ -85,8 +69,50 @@
 
             <!-- Bottom Floating Action -->
             <div class="absolute bottom-10 right-10">
-                <button class="w-12 h-12 bg-white border border-outline rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-all shadow-md group">
+                <button @click="helpModalOpen = true" class="w-12 h-12 bg-white border border-outline rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary transition-all shadow-md group cursor-pointer">
                     <span class="material-symbols-outlined text-[24px]">help</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Soporte WhatsApp -->
+    <div x-show="helpModalOpen" 
+         x-cloak 
+         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95">
+         
+        <div class="bg-white rounded-[2rem] shadow-2xl border border-outline p-8 max-w-md w-full relative flex flex-col items-center gap-6" @click.away="helpModalOpen = false">
+            <!-- Icono verde de Whatsapp -->
+            <div class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center text-primary shadow-sm border border-emerald-100">
+                <span class="material-symbols-outlined text-[32px] fill-1">chat</span>
+            </div>
+            
+            <div class="text-center flex flex-col gap-2">
+                <h3 class="text-xl font-black text-secondary">Soporte Técnico Inmediato</h3>
+                <p class="text-sm text-on-surface-variant leading-relaxed font-medium">
+                    ¿Tienes dudas o necesitas asistencia con el sistema de la <strong>Academia Conduser</strong>? Ponte en contacto con nuestro equipo por WhatsApp para recibir ayuda personalizada de inmediato.
+                </p>
+            </div>
+            
+            <div class="flex flex-col gap-3 w-full">
+                <!-- Botón de chat WhatsApp -->
+                <a href="https://wa.me/573000000000?text=Hola,%20necesito%20soporte%20con%20el%20sistema%20Academia%20Conduser" 
+                   target="_blank" 
+                   class="w-full h-14 bg-[#006837] hover:bg-[#005a30] text-white rounded-2xl font-bold shadow-xl shadow-primary/10 hover:shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2 text-sm cursor-pointer">
+                    <span class="material-symbols-outlined">chat</span>
+                    Iniciar Chat de WhatsApp
+                </a>
+                
+                <!-- Botón de cerrar -->
+                <button @click="helpModalOpen = false" 
+                        class="w-full h-14 bg-surface-variant text-on-surface-variant hover:text-secondary rounded-2xl font-bold transition-all text-sm cursor-pointer">
+                    Cancelar
                 </button>
             </div>
         </div>

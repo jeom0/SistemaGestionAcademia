@@ -1,287 +1,228 @@
 @extends('layouts.app')
 
-@section('page-title', 'Editar Movimiento')
+@section('title', 'Editar Movimiento')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>
-        <i class="fas fa-edit"></i> Editar Movimiento
-    </h2>
-    <a href="{{ route('movements.index') }}" class="btn btn-outline-secondary">
-        <i class="fas fa-arrow-left"></i> Volver
-    </a>
-</div>
+<div class="flex flex-col gap-10 max-w-[1200px] mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-4xl font-black text-secondary tracking-tight">Editar Movimiento</h1>
+            <p class="text-on-surface-variant font-medium">Actualice la información de la transacción #{{ $movement->id }}.</p>
+        </div>
+        <a href="{{ route('movements.index') }}" class="h-12 px-6 border border-outline text-secondary rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-surface-variant transition-all cursor-pointer shrink-0">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            Volver
+        </a>
+    </div>
 
-<div class="row">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">
-                    <i class="fas fa-edit"></i> Editar Información del Movimiento
-                </h5>
-                <div>
-                    <span class="badge bg-{{ $movement->type === 'ingreso' ? 'success' : 'danger' }}">
-                        {{ ucfirst($movement->type) }}
-                    </span>
-                    <span class="badge bg-primary">
-                        ${{ number_format($movement->amount, 2) }}
-                    </span>
+    <!-- Core Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Main Form Column (2/3 Width) -->
+        <div class="lg:col-span-2 flex flex-col gap-8">
+            <div class="bg-white border border-outline rounded-[2.5rem] shadow-premium overflow-hidden">
+                <div class="p-8 md:p-10 border-b border-outline bg-gray-50/20 flex justify-between items-center flex-wrap gap-4">
+                    <h3 class="text-xl font-bold text-secondary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary fill-1">edit_calendar</span>
+                        Modificar Transacción
+                    </h3>
+                    <div class="flex items-center gap-3">
+                        <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider {{ $movement->type === 'ingreso' ? 'bg-emerald-50 text-primary border border-emerald-100' : 'bg-red-50 text-red-600 border border-red-100' }}">
+                            {{ $movement->type }}
+                        </span>
+                        <span class="text-xs font-black text-secondary">
+                            ${{ number_format($movement->amount, 0) }}
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('movements.update', $movement) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="type" class="form-label">
-                                    <i class="fas fa-tag"></i> Tipo de Movimiento
-                                </label>
+                
+                <div class="p-8 md:p-12">
+                    <form action="{{ route('movements.update', $movement) }}" method="POST" class="flex flex-col gap-8">
+                        @csrf
+                        @method('PUT')
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Type of Movement -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Tipo de Movimiento</label>
                                 @if(auth()->user()->isCollaborator())
                                     <input type="hidden" name="type" value="egreso">
-                                    <div class="form-control bg-light">
-                                        <i class="fas fa-arrow-down text-danger"></i> Egreso
-                                        <small class="text-muted">(Solo puedes registrar egresos)</small>
+                                    <div class="w-full h-14 px-5 rounded-2xl bg-surface-variant/40 border border-outline flex items-center gap-3 text-red-600 font-bold select-none">
+                                        <span class="material-symbols-outlined">trending_down</span>
+                                        Egreso <span class="text-[10px] text-on-surface-variant/60 font-semibold uppercase tracking-wider ml-1">(Rol Colaborador)</span>
                                     </div>
                                 @else
-                                    <select class="form-select @error('type') is-invalid @enderror" 
-                                            id="type" 
-                                            name="type" 
-                                            required>
-                                        <option value="">Selecciona tipo...</option>
-                                        <option value="ingreso" {{ old('type', $movement->type) == 'ingreso' ? 'selected' : '' }}>
-                                            <i class="fas fa-arrow-up"></i> Ingreso
-                                        </option>
-                                        <option value="egreso" {{ old('type', $movement->type) == 'egreso' ? 'selected' : '' }}>
-                                            <i class="fas fa-arrow-down"></i> Egreso
-                                        </option>
-                                    </select>
+                                    <div class="relative">
+                                        <select class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" 
+                                                id="type" 
+                                                name="type" 
+                                                required>
+                                            <option value="ingreso" {{ old('type', $movement->type) == 'ingreso' ? 'selected' : '' }}>Ingreso (+)</option>
+                                            <option value="egreso" {{ old('type', $movement->type) == 'egreso' ? 'selected' : '' }}>Egreso (-)</option>
+                                        </select>
+                                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                                    </div>
                                     @error('type')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @endif
+                                        <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
+                                    @enderror
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="amount" class="form-label">
-                                    <i class="fas fa-dollar-sign"></i> Monto ($)
-                                </label>
-                                <input type="number" 
-                                       step="0.01" 
-                                       min="0.01" 
-                                       class="form-control @error('amount') is-invalid @enderror" 
-                                       id="amount" 
-                                       name="amount" 
-                                       value="{{ old('amount', $movement->amount) }}" 
-                                       placeholder="0.00" 
-                                       required>
+
+                            <!-- Amount -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Monto ($ COP)</label>
+                                <div class="relative">
+                                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
+                                    <input type="number" 
+                                           step="0.01" 
+                                           min="0.01" 
+                                           class="w-full h-14 pl-10 pr-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-bold" 
+                                           id="amount" 
+                                           name="amount" 
+                                           value="{{ old('amount', $movement->amount) }}" 
+                                           placeholder="0.00" 
+                                           required>
+                                </div>
                                 @error('amount')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Ingresa el monto con dos decimales.</small>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="date" class="form-label">
-                                    <i class="fas fa-calendar"></i> Fecha del Movimiento
-                                </label>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Date -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Fecha del Movimiento</label>
                                 <input type="date" 
-                                       class="form-control @error('date') is-invalid @enderror" 
+                                       class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" 
                                        id="date" 
                                        name="date" 
                                        value="{{ old('date', $movement->date->format('Y-m-d')) }}" 
                                        required>
                                 @error('date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Fecha en que se realizó el movimiento.</small>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="associated_to" class="form-label">
-                                    <i class="fas fa-link"></i> Asociado a (Opcional)
-                                </label>
+
+                            <!-- Associated to -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Asociado a (Cuenta / Entidad)</label>
                                 <input type="text" 
-                                       class="form-control @error('associated_to') is-invalid @enderror" 
+                                       class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" 
                                        id="associated_to" 
                                        name="associated_to" 
                                        value="{{ old('associated_to', $movement->associated_to) }}" 
-                                       placeholder="Cliente, proveedor, servicio, etc.">
+                                       placeholder="Banco Principal, Caja Chica, etc.">
                                 @error('associated_to')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Persona o entidad relacionada con el movimiento.</small>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="description" class="form-label">
-                            <i class="fas fa-align-left"></i> Descripción
-                        </label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="description" 
-                                  name="description" 
-                                  rows="4" 
-                                  placeholder="Describe detalladamente el movimiento..." 
-                                  required>{{ old('description', $movement->description) }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <small class="form-text text-muted">Describe el motivo o detalle del movimiento (mínimo 3 caracteres).</small>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <h6><i class="fas fa-info-circle"></i> Información del Movimiento</h6>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="mb-1"><strong>ID:</strong> #{{ $movement->id }}</p>
-                                <p class="mb-1"><strong>Registrado por:</strong> {{ $movement->user->name }}</p>
-                                <p class="mb-0"><strong>Fecha de registro:</strong> {{ $movement->created_at->format('d/m/Y H:i') }}</p>
+
+                        <!-- Description -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Descripción</label>
+                            <textarea class="w-full p-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium resize-none" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="4" 
+                                      placeholder="Describe detalladamente el movimiento..." 
+                                      required>{{ old('description', $movement->description) }}</textarea>
+                            @error('description')
+                                <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <!-- Audit metadata box -->
+                        <div class="p-6 bg-surface-variant/30 border border-outline rounded-3xl flex flex-col gap-4 text-xs font-semibold text-on-surface-variant">
+                            <div class="flex items-center gap-2 text-secondary font-black text-xs uppercase tracking-widest border-b border-outline pb-2">
+                                <span class="material-symbols-outlined text-[16px] text-primary">feed</span>
+                                Bitácora de Registro
                             </div>
-                            <div class="col-md-6">
-                                <p class="mb-1"><strong>Última actualización:</strong> {{ $movement->updated_at->format('d/m/Y H:i') }}</p>
-                                <p class="mb-0"><strong>Estado:</strong> <span class="badge bg-success">Activo</span></p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <span><strong>ID Interno:</strong> #{{ $movement->id }}</span>
+                                    <span><strong>Registrador por:</strong> {{ $movement->user->name ?? 'Sistema' }}</span>
+                                    <span><strong>Fecha Registro:</strong> {{ $movement->created_at->format('d/m/Y H:i') }}</span>
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <span><strong>Última Modificación:</strong> {{ $movement->updated_at->format('d/m/Y H:i') }}</span>
+                                    <span><strong>Estado de Transacción:</strong> <span class="text-primary font-bold uppercase tracking-wider">{{ $movement->status }}</span></span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <hr>
-                    
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('movements.index') }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-arrow-left"></i> Cancelar
-                        </a>
-                        <div>
-                            <form action="{{ route('movements.destroy', $movement) }}" 
-                                  method="POST" 
-                                  class="d-inline"
-                                  onsubmit="return confirm('¿Estás seguro de eliminar este movimiento? Esta acción no se puede deshacer.')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger me-2">
-                                    <i class="fas fa-trash"></i> Eliminar
+
+                        <!-- Actions row (Responsive) -->
+                        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-outline pt-8">
+                            <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-4">
+                                <a href="{{ route('movements.index') }}" class="h-14 px-8 rounded-2xl border border-outline text-on-surface-variant font-bold text-sm hover:bg-surface-variant flex items-center justify-center transition-all">
+                                    Cancelar
+                                </a>
+                                <button type="submit" class="h-14 px-8 bg-primary text-white rounded-2xl font-bold text-sm hover:shadow-xl hover:shadow-primary/20 transition-all active:scale-[0.98]">
+                                    Guardar Cambios
                                 </button>
-                            </form>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fas fa-save"></i> Actualizar Movimiento
-                            </button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Permissions and Deletion (1/3 Width) -->
+        <div class="flex flex-col gap-8">
+            <!-- Dangerous Actions Card (Delete) -->
+            <div class="bg-white border border-outline rounded-[2.5rem] p-8 shadow-premium flex flex-col gap-6">
+                <h4 class="text-xs font-black text-red-600 uppercase tracking-widest border-b border-outline pb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-red-500 fill-1">warning</span>
+                    Acciones de Riesgo
+                </h4>
+                
+                <p class="text-xs text-on-surface-variant font-medium leading-relaxed">
+                    Al eliminar este movimiento se restará o sumará la cantidad respectiva del saldo de las cuentas y el flujo contable global. Esta acción no se puede deshacer.
+                </p>
+                
+                <form action="{{ route('movements.destroy', $movement) }}" 
+                      method="POST" 
+                      onsubmit="return confirm('¿Estás seguro de eliminar este movimiento? Esta acción no se puede deshacer.')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="w-full h-14 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-2xl font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                        <span class="material-symbols-outlined">delete</span>
+                        Eliminar Transacción
+                    </button>
                 </form>
             </div>
-        </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="mb-0">
-                    <i class="fas fa-history"></i> Historial de Cambios
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <strong>Creado:</strong><br>
-                    <small class="text-muted">
-                        {{ $movement->created_at->format('d/m/Y H:i') }}<br>
-                        Por: {{ $movement->user->name }}
-                    </small>
-                </div>
-                @if($movement->created_at != $movement->updated_at)
-                    <div class="mb-0">
-                        <strong>Última modificación:</strong><br>
-                        <small class="text-muted">
-                            {{ $movement->updated_at->format('d/m/Y H:i') }}<br>
-                            Por: {{ auth()->user()->name }} (edición actual)
-                        </small>
-                    </div>
-                @endif
-            </div>
-        </div>
-        
-        <div class="card mt-3">
-            <div class="card-header">
-                <h6 class="mb-0">
-                    <i class="fas fa-shield-alt"></i> Permisos de Edición
-                </h6>
-            </div>
-            <div class="card-body">
-                @if(auth()->user()->isCollaborator())
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes editar este movimiento (es tuyo)</small>
+
+            <!-- Role Permissions Card -->
+            <div class="bg-white border border-outline rounded-[2.5rem] p-8 shadow-premium flex flex-col gap-4">
+                <h4 class="text-xs font-black text-secondary uppercase tracking-widest border-b border-outline pb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-indigo-600 fill-1">shield</span>
+                    Permisos de Edición
+                </h4>
+                
+                <ul class="flex flex-col gap-3">
+                    @if(auth()->user()->isCollaborator())
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Puede modificar este registro porque le pertenece.</span>
                         </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes eliminar este movimiento</small>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-red-500 text-[18px] shrink-0">cancel</span>
+                            <span>No está autorizado a modificar transacciones de terceros.</span>
                         </li>
-                        <li class="mb-0">
-                            <i class="fas fa-times text-danger"></i>
-                            <small>No puedes cambiar el tipo a ingreso</small>
+                    @else
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Control completo de edición sobre cualquier campo.</span>
                         </li>
-                    </ul>
-                @else
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes editar cualquier campo</small>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Registro automático de auditoría con su autoría.</span>
                         </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes cambiar el tipo</small>
-                        </li>
-                        <li class="mb-0">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes eliminar este movimiento</small>
-                        </li>
-                    </ul>
-                @endif
+                    @endif
+                </ul>
             </div>
         </div>
-        
-        <div class="alert alert-warning mt-3">
-            <h6><i class="fas fa-exclamation-triangle"></i> Advertencia</h6>
-            <p class="mb-2">
-                <strong>Al modificar este movimiento, se actualizará la fecha de última edición.</strong>
-            </p>
-            <p class="mb-0">
-                <strong>Todos los cambios quedan registrados en el sistema.</strong>
-            </p>
-        </div>
-        
-        @if(!auth()->user()->isCollaborator())
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">
-                        <i class="fas fa-chart-line"></i> Impacto en Estadísticas
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <div class="mb-2">
-                        <small class="text-muted">Tipo actual:</small><br>
-                        <span class="badge bg-{{ $movement->type === 'ingreso' ? 'success' : 'danger' }}">
-                            {{ ucfirst($movement->type) }}
-                        </span>
-                    </div>
-                    <div class="mb-0">
-                        <small class="text-muted">Monto actual:</small><br>
-                        <strong class="text-{{ $movement->type === 'ingreso' ? 'success' : 'danger' }}">
-                            ${{ number_format($movement->amount, 2) }}
-                        </strong>
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
 </div>
 @endsection

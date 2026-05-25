@@ -1,0 +1,89 @@
+{
+  "project": "Academia Conduser",
+  "theme": {
+    "primary_color": "#006837",
+    "secondary_color": "#141b2b",
+    "background_gradient": "linear-gradient(135deg, #006837 0%, #141b2b 100%)",
+    "card_background": "#ffffff",
+    "border_radius": "2rem",
+    "font_family": "Inter, sans-serif"
+  },
+  "branding": {
+    "name": "Conduser",
+    "logo_icon": "directions_car",
+    "tagline": "Sistema de Control Financiero y Flotas"
+  },
+  "layout_style": {
+    "isometric_overlap": true,
+    "floating_perspective": "isometric-skew",
+    "shadow_depth": "deep-blur-2xl"
+  },
+  "cards": [
+    {
+      "id": "card_01_chart",
+      "type": "bar_chart_comparison",
+      "title": "Rendimiento Mensual de Cursos",
+      "main_value": "$14,500.00",
+      "change_percentage": "+15.4%",
+      "periods": [
+        { "name": "Nov", "segments": [ { "category": "Licencia B1", "value": 35500, "color": "#006837" }, { "category": "Licencia A2", "value": 18200, "color": "#f59e0b" } ] },
+        { "name": "Dic", "segments": [ { "category": "Licencia B1", "value": 40832, "color": "#10b981" }, { "category": "Licencia A2", "value": 25480, "color": "#ef4444" } ] }
+      ],
+      "legend": [
+        { "name": "Cursos Auto", "color": "#006837" },
+        { "name": "Cursos Moto", "color": "#f59e0b" }
+      ]
+    },
+    {
+      "id": "card_02_income",
+      "type": "metric_card",
+      "label": "Ingresos Registrados",
+      "value": "$25,480.00",
+      "trend": {
+        "direction": "up",
+        "value": "+13.6%",
+        "context": "respecto al mes anterior"
+      },
+      "overlapping_brand": {
+        "name": "Bancolombia",
+        "primary_color": "#fdc82f",
+        "accent_color": "#000000",
+        "icon_type": "bank_shield"
+      }
+    },
+    {
+      "id": "card_03_expenses",
+      "type": "metric_card",
+      "label": "Gastos de Flota y Nómina",
+      "value": "$8,350.00",
+      "trend": {
+        "direction": "down",
+        "value": "-6.22%",
+        "context": "ahorro en combustibles"
+      },
+      "overlapping_brand": {
+        "name": "Mantenimiento Flota",
+        "primary_color": "#006837",
+        "accent_color": "#ffffff",
+        "icon_type": "directions_car"
+      }
+    },
+    {
+      "id": "card_04_students",
+      "type": "metric_card",
+      "label": "Nuevos Estudiantes",
+      "value": "1,248",
+      "trend": {
+        "direction": "up",
+        "value": "+8.23%",
+        "context": "este semestre"
+      },
+      "overlapping_brand": {
+        "name": "Academia Conduser",
+        "primary_color": "#141b2b",
+        "accent_color": "#ffffff",
+        "icon_type": "school"
+      }
+    }
+  ]
+}

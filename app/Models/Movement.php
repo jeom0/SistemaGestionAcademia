@@ -28,15 +28,12 @@ class Movement extends Model
     /**
      * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'amount' => 'decimal:2',
-            'date' => 'date',
-        ];
-    }
+    protected $casts = [
+        'amount' => 'decimal:2',
+        'date' => 'date',
+    ];
 
     /**
      * Get the user that owns the movement.

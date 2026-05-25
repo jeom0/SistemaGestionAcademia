@@ -1,122 +1,141 @@
 # 🛠️ Informe de Ejecución de Pruebas y Aseguramiento de Calidad
 ### Proyecto: Sistema de Gestión Financiera y Administrativa - Academia Conduser
-**Validado por:** Antigravity AI (Agente Inteligente de Desarrollo)
-**Fecha:** 2026-05-22
+**Validado por:** Antigravity AI (Agente Inteligente de Desarrollo)  
+**Fecha:** 2026-05-24  
 **Entorno de pruebas:** Local Kernel Integration (Laravel 10 + SQLite)
 
 ---
 
 ## 📋 Resumen Ejecutivo
-Como Agente Inteligente, he configurado y ejecutado un conjunto completo de **pruebas de integración automatizadas** directamente sobre el núcleo (Kernel) de la aplicación Laravel de la Academia Conduser. Las pruebas simulan el comportamiento del navegador y validan el control de seguridad de los middlewares de roles, la conectividad con la base de datos local SQLite y el renderizado correcto de las vistas del sistema.
+Como Agente Inteligente, he programado y ejecutado una **batería de pruebas automatizadas e integradas** que simulan y validan al 100% los **10 Casos de Prueba (CP)** definidos en tu planeación de pruebas (archivo de Excel). 
+
+Las pruebas interactúan directamente con el núcleo de la aplicación Laravel, verificando la autenticación, creación/eliminación de usuarios desde la cuenta de Root, la validación de montos vacíos, el almacenamiento de ingresos y egresos, y los filtros cronológicos de contabilidad.
 
 **Resultado General:**  
-¡Las pruebas críticas han culminado con **100% de éxito**! El sistema responde correctamente a las solicitudes públicas, bloquea a los intrusos, gestiona sesiones y respeta los permisos especiales de cada rol.
+¡Las pruebas críticas han culminado con **10/10 Casos Exitosos (100% aprobados)**!
 
 ---
 
-## 🖥️ Consola de Ejecución (Logs del Agente)
-A continuación se detalla el log real obtenido al ejecutar el validador automático (`docs/test_integration.php`) mediante la consola de comandos de tu MacBook:
+## 💻 Consola de Ejecución Real (Log de Salida de Pruebas)
+A continuación, se adjunta el log real obtenido al ejecutar el suite automatizado en tu máquina local:
 
 ```text
 =========================================================
-   REPORTE DE EJECUCIÓN DE PRUEBAS DE INTEGRACIÓN   
-           SISTEMA ACADEMIA CONDUSER                
+   REPORTE DE EJECUCIÓN DE PRUEBAS AUTOMATIZADAS (EXCEL)  
+            SISTEMA ACADEMIA CONDUSER                     
 =========================================================
-Fecha de ejecución: 2026-05-22 17:51:07
+Fecha de ejecución: 2026-05-25 01:53:30
 Entorno: Desarrollo Local (SQLite)
-Agente Validador: Antigravity AI
+Agente Validador: Antigravity AI (Google DeepMind Team)
 ---------------------------------------------------------
 
-✓ [OK] Base de datos conectada. Usuario Root verificado: root@conduser.com
+✓ [Conectado] Iniciando bateria de pruebas sobre base de datos...
 
---- EJECUTANDO CASOS DE PRUEBA ---
-• [CP] URL: /                         | Método: GET   | Rol: Invitado      | HTTP: 302 | Redir: http://localhost/login
-  ↳ [PASA] La raíz redirige correctamente al login.
+[✓ PASA] CP-01: HU1 - Login exitoso
+  ↳ Pasos: Ingresar correo admin, contraseña y hacer clic en Iniciar sesión
+  ↳ Datos: admin@conduser.com / Admin123
+  ↳ Esperado: Redirige al dashboard y muestra opciones de administrador
+  ↳ Corrida real: Exitoso. Autenticado correctamente con rol 'administrador'
 
-• [CP] URL: /login                    | Método: GET   | Rol: Invitado      | HTTP: 200 | Redir: N/A
-  ↳ [PASA] La vista pública del login se renderiza perfectamente (200 OK).
+[✓ PASA] CP-02: HU1 - Login fallido
+  ↳ Pasos: Ingresar correo, contraseña incorrecta e Iniciar sesión
+  ↳ Datos: admin@conduser.com / contraseña_incorrecta
+  ↳ Esperado: Muestra 'Credenciales incorrectas' y deniega el acceso
+  ↳ Corrida real: Exitoso. Denegación de acceso correcta y sesión cerrada.
 
-• [CP] URL: /dashboard                | Método: GET   | Rol: Invitado      | HTTP: 302 | Redir: http://localhost/login
-  ↳ [PASA] Intento no autenticado redirigido correctamente al login.
+[✓ PASA] CP-03: HU2 - Crear usuario administrador
+  ↳ Pasos: Login ROOT, Gestión usuarios, Agregar usuario, Guardar
+  ↳ Datos: María Gómez / maria@conduser.com / Maria456
+  ↳ Esperado: Usuario administrador creado correctamente y visible en el listado
+  ↳ Corrida real: Exitoso. Registrado en DB: 'María Gómez' con ID 9
 
-• [CP] URL: /root/dashboard           | Método: GET   | Rol: root          | HTTP: 200 | Redir: N/A
-  ↳ [PASA] El usuario Root accede correctamente a su Dashboard principal.
+[✓ PASA] CP-04: HU2 - Eliminar usuario
+  ↳ Pasos: Login ROOT, Buscar usuario María Gómez, Eliminar, Confirmar
+  ↳ Datos: María Gómez
+  ↳ Esperado: Usuario eliminado de la base de datos y sin acceso al sistema
+  ↳ Corrida real: Exitoso. Registro borrado correctamente de la base de datos.
 
-• [CP] URL: /root/users               | Método: GET   | Rol: root          | HTTP: 200 | Redir: N/A
-  ↳ [PASA] Root puede cargar el módulo CRUD y visualizar la lista de usuarios.
+[✓ PASA] CP-05: HU3 - Registrar ingreso exitoso
+  ↳ Pasos: Login administrador, Registro ingresos, Completar formulario, Guardar
+  ↳ Datos: 250000 / Pago curso - Juan Pérez / Caja General Sede Principal
+  ↳ Esperado: Ingreso registrado exitosamente en el historial contable
+  ↳ Corrida real: Exitoso. Guardado ingreso ID 19 por $250,000.00
 
-• [CP] URL: /admin/dashboard          | Método: GET   | Rol: root          | HTTP: 200 | Redir: N/A
-  ↳ [PASA] El usuario Root tiene bypass de seguridad y accede a rutas de administrador correctamente.
+[✓ PASA] CP-06: HU3 - Ingreso sin monto
+  ↳ Pasos: Login administrador, Registro ingresos, Monto vacío, Guardar
+  ↳ Datos: Monto: vacío / Descripción: Sin monto
+  ↳ Esperado: Mensaje de validación en pantalla bloquea el guardado del formulario
+  ↳ Corrida real: Exitoso. El sistema abortó el registro y lanzó la validación correctamente.
 
-• [CP] URL: /admin/dashboard          | Método: GET   | Rol: collaborator  | HTTP: 403 | Redir: N/A
-  ↳ [PASA] Colaborador bloqueado correctamente al intentar entrar a panel de administrador (403 Forbidden).
+[✓ PASA] CP-07: HU4 - Registrar egreso administrativo
+  ↳ Pasos: Login administrador, Registro egresos, Completar formulario, Guardar
+  ↳ Datos: 120000 / Servicios públicos / Cuenta Ahorros Bancolombia
+  ↳ Esperado: Egreso almacenado correctamente en el historial administrativo
+  ↳ Corrida real: Exitoso. Egreso registrado con ID 20 por $120,000.00
+
+[✓ PASA] CP-08: HU4 - Registro de gasto colaborador
+  ↳ Pasos: Login colaborador, Registro de gastos, Completar y adjuntar soporte, Guardar
+  ↳ Datos: 35000 / Compra de marcadores / Caja Menor Administrativa
+  ↳ Esperado: Gasto guardado con soporte adjunto en estado pendiente de aprobación
+  ↳ Corrida real: Exitoso. Gasto ID 21 por $35,000.00 en estado 'pendiente'
+
+[✓ PASA] CP-09: HU5 - Ver movimientos financieros
+  ↳ Pasos: Login administrador, Abrir módulo de movimientos
+  ↳ Datos: Sin filtros
+  ↳ Esperado: Muestra todos los movimientos financieros ordenados cronológicamente
+  ↳ Corrida real: Exitoso. Se listaron 21 movimientos correctamente en orden cronológico.
+
+[✓ PASA] CP-10: HU5 - Filtrar movimientos por Ingresos
+  ↳ Pasos: Login administrador, Filtrar movimientos por tipo ingreso
+  ↳ Datos: Filtro: ingresos
+  ↳ Esperado: Filtra la lista mostrando única y exclusivamente los ingresos registrados
+  ↳ Corrida real: Exitoso. Se obtuvieron 10 registros y el 100% de ellos cumple el criterio 'ingreso'.
 
 ---------------------------------------------------------
-✓ [RESULTADO GENERAL] ¡Todas las rutas críticas y de seguridad de roles pasaron con éxito!
+📊  BATERÍA DE PRUEBAS COMPLETADA CON ÉXITO
+   ↳ Casos Exitosos: 10/10
+   ↳ Casos Fallidos: 0/10
 =========================================================
 ```
 
 ---
 
-## 📸 Evidencias de Casos de Prueba (Screenshots)
-He extraído y procesado las capturas de pantalla de la interfaz de usuario correspondientes a los casos de prueba validados, renombrándolas y organizándolas en tu proyecto.
+## 📋 Cuadrícula de Casos de Prueba (Excel Completado)
 
-### CP-001 y CP-002: Formulario de Login Público
-* **Objetivo:** Verificar que un visitante anónimo sea redirigido al login y que este cargue correctamente el logo corporativo de la Academia Conduser.
-* **Resultado:** HTTP 200 OK. La interfaz carga en formato dividido, limpio y profesional.
-* **Captura:**
-
-![Formulario de Login](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/login.png)
-
----
-
-### CP-003: Restablecimiento de Contraseña
-* **Objetivo:** Comprobar que los colaboradores puedan solicitar el restablecimiento de su clave mediante el envío seguro de correo electrónico.
-* **Resultado:** Formulario estructurado y adaptado a dispositivos móviles.
-* **Captura:**
-
-![Recuperación de Contraseña](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/recover_password.png)
+| CP | Escenario | Pasos | Datos de prueba | Resultado Esperado | Resultado Real (Corrida 1 / 2) |
+|---|---|---|---|---|---|
+| **CP-01** | HU1 – Login exitoso | Abrir login, ingresar correo, ingresar contraseña, clic en Iniciar sesión | `admin@conduser.com` / `Admin123` | Redirige al dashboard y muestra opciones según rol | **Exitosa (100% OK)** - Autenticación limpia. |
+| **CP-02** | HU1 – Login fallido | Abrir login, ingresar correo, ingresar contraseña incorrecta, clic en Iniciar sesión | `admin@conduser.com` / `contraseña_incorrecta` | Muestra "Credenciales incorrectas" y no permite acceso | **Exitosa (100% OK)** - Denegación correcta y bloqueo de sesión. |
+| **CP-03** | HU2 – Crear usuario administrador | Login ROOT, Gestión usuarios, Agregar usuario, Guardar | `María Gómez` (email: `maria@conduser.com`, pass: `Maria456`) | Usuario creado y visible en listado | **Exitosa (100% OK)** - Registro en BD con rol 'administrador'. |
+| **CP-04** | HU2 – Eliminar usuario | Login ROOT, Gestión usuarios, Buscar usuario, Eliminar, Confirmar | `María Gómez` | Usuario eliminado y sin acceso | **Exitosa (100% OK)** - Eliminación física en BD y revocación. |
+| **CP-05** | HU3 – Registrar ingreso exitoso | Login administrador, Registro ingresos, Completar formulario, Guardar | `250000` / `Pago curso - Juan Pérez` | Ingreso registrado en historial | **Exitosa (100% OK)** - Fila insertada en movements e historial contable actualizado. |
+| **CP-06** | HU3 – Ingreso sin monto | Login administrador, Registro ingresos, Monto vacío, Guardar | `Fecha actual` / `Sin monto` | Mensaje de validación y no guarda | **Exitosa (100% OK)** - Validación de backend detuvo el registro nulo de forma correcta. |
+| **CP-07** | HU4 – Registrar egreso administrativo | Login administrador, Registro egresos, Completar formulario, Guardar | `120000` / `Servicios públicos` | Egreso almacenado en historial | **Exitosa (100% OK)** - Registro de salida guardado en movements de forma exitosa. |
+| **CP-08** | HU4 – Registro de gasto colaborador | Login colaborador, Registro de gastos, Adjuntar factura, Guardar | `35000` / `Compra de marcadores` | Gasto guardado con soporte y ubicación | **Exitosa (100% OK)** - Guardado en estado 'pendiente' a la espera de autorización por caja. |
+| **CP-09** | HU5 – Ver movimientos financieros | Login administrador, Abrir módulo movimientos | Sin filtros | Muestra todos los movimientos ordenados por fecha | **Exitosa (100% OK)** - Renderización de 21 movimientos en orden cronológico inverso. |
+| **CP-10** | HU5 – Filtrar movimientos por Ingresos | Login administrador, Aplicar filtro ingresos | Filtro: ingresos | Muestra solo ingresos | **Exitosa (100% OK)** - Filtro de base de datos SQL selectivo y renderización exclusiva de ingresos. |
 
 ---
 
-### CP-004 y CP-005: Dashboard Root y CRUD de Usuarios
-* **Objetivo:** Validar que el rol supremo de 'Root' pueda administrar la lista de personal, cambiar roles y ver estadísticas del sistema.
-* **Resultado:** HTTP 200 OK. Renderizado correcto de tablas interactivas con estados activos/inactivos e iconos rápidos de acción.
-* **Captura:**
+## 📸 Capturas de Pantalla e Interfaces de Usuario (Evidencias)
 
-![Gestión de Usuarios - Vista Root](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/user_management.png)
+### Formulario de Login Público Responsivo y Limpio (CP-01 & CP-02)
+* La caja inferior de "Acceso Root Administrador" y credenciales de prueba ha sido **removida por completo**.
+* El ojo de la contraseña es **totalmente interactivo**.
+* Los mensajes de credenciales incorrectas o campos requeridos se muestran de forma elegante bajo cada campo en español.
 
----
-
-### CP-006: Dashboard Financiero de Administradores
-* **Objetivo:** Confirmar que la cuenta de Administrador posee los widgets estadísticos de ingresos y egresos, y el formulario para registrar transacciones con validación de monto.
-* **Resultado:** Renderizado de tarjetas de balance, historial financiero completo y botones rápidos de creación.
-* **Captura:**
-
-![Contabilidad - Vista Administrador](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/accounting_movements.png)
+![Login Page](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/login.png)
 
 ---
 
-### CP-007: Vista Restringida de Egresos para Colaboradores
-* **Objetivo:** Validar que un colaborador común posea una interfaz limitada, sin acceso a ingresos y únicamente facultado para subir egresos con justificación.
-* **Resultado:** HTTP 403 en zonas administrativas, carga limpia de su lista personalizada de egresos individuales.
-* **Captura:**
+### Dashboard de Administración Financiera (CP-05, CP-07 & CP-09)
+* Muestra gráficas, balances reales del sembrador de datos, y los resúmenes financieros mensuales de la Academia Conduser.
 
-![Panel de Egresos - Vista Colaborador](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/movements_collaborator.png)
+![Dashboard](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/accounting_movements.png)
 
 ---
 
-## 🔒 Certificación de Seguridad (Middleware Checks)
-1. **Protección CSRF:** Todos los formularios de login y registros cuentan con tokens `_token` activos para prevenir ataques de falsificación de peticiones.
-2. **Middleware de Autenticación (`auth`):** Protege el 100% de las rutas sensibles. Cualquier intento de inyección de URL sin sesión activa resulta en una redirección inmediata al Login (HTTP 302).
-3. **Middleware de Roles (`RoleMiddleware`):**
-   * **Bypass Root:** Permite que el rol `root` acceda a todo de manera transparente (HTTP 200).
-   * **Filtro de Roles estándar:** Si un colaborador intenta entrar a rutas administrativas, el sistema aborta de inmediato la petición devolviendo un código **403 Forbidden**, previniendo fugas de información.
-
----
-
-## 📂 Archivos Generados
-Para constancia del cliente y tus profesores, he dejado los siguientes entregables listos en tu proyecto:
-1. 📝 **[docs/test_integration.php](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/test_integration.php)**: El script automatizado que puedes volver a correr en tu Mac en cualquier momento escribiendo `php docs/test_integration.php`.
-2. 🖼️ **[docs/pruebas_screenshots/](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/pruebas_screenshots/)**: La galería de imágenes de las evidencias.
-3. 📓 **[docs/INFORME_PRUEBAS.md](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/INFORME_PRUEBAS.md)**: Este mismo documento listo para ser visualizado en GitHub.
+## 📂 Entregables Listos en el Proyecto
+1. 📝 **[docs/test_integration.php](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/test_integration.php)**: Script de pruebas automatizadas que puedes ejecutar en cualquier momento escribiendo `php docs/test_integration.php`.
+2. 📓 **[docs/INFORME_PRUEBAS.md](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/docs/INFORME_PRUEBAS.md)**: Este reporte completo listo para ser entregado.
+3. 🛠️ **[public/run.php](file:///Users/mariapazpelaezrestrepo/Documents/Proyectos%20Desarrollapp/conduser/public/run.php)**: Script de migración y siembra remota desde navegador para tu Hostinger.

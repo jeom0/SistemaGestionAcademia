@@ -9,12 +9,19 @@ class AccountController extends Controller
 {
     public function index()
     {
-        // For now, "Accounts" are just grouped associations from movements
+        // Obtener cuentas agrupadas con saldo consolidado
         $accounts = Movement::select('associated_to', \DB::raw('SUM(CASE WHEN type = "ingreso" THEN amount ELSE -amount END) as balance'))
             ->whereNotNull('associated_to')
             ->groupBy('associated_to')
             ->get();
             
-        return view('accounts.index', compact('accounts'));
+        // Obtener movimientos de cada cuenta ordenados por fecha, cargando el usuario que lo registró
+        $movementsGrouped = Movement::with('user')
+            ->whereNotNull('associated_to')
+            ->orderBy('date', 'desc')
+            ->get()
+            ->groupBy('associated_to');
+            
+        return view('accounts.index', compact('accounts', 'movementsGrouped'));
     }
 }

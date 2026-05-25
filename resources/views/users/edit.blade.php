@@ -18,7 +18,7 @@
 
     <!-- Edit Form Card -->
     <div class="bg-white border border-outline rounded-[2.5rem] shadow-sm overflow-hidden">
-        <div class="p-12">
+        <div class="p-6 md:p-12">
             <h3 class="text-xl font-bold text-secondary mb-10 ml-1">Modificar Información</h3>
             
             <form action="{{ route('root.users.update', $user) }}" method="POST" class="flex flex-col gap-10">

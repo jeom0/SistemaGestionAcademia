@@ -16,12 +16,16 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/password/reset', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('/password/reset', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/password/reset', function() {
+        return view('auth.passwords.email');
+    })->name('password.request');
+    Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
@@ -42,17 +46,17 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // Administrator routes
-    Route::middleware(['role:administrator'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['role:administrador'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     });
     
     // Collaborator routes
-    Route::middleware(['role:collaborator'])->prefix('collaborator')->name('collaborator.')->group(function () {
+    Route::middleware(['role:colaborador'])->prefix('collaborator')->name('collaborator.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'collaborator'])->name('dashboard');
     });
     
     // Movement routes (accessible by administrator and collaborator)
-    Route::middleware(['role:administrator,collaborator'])->group(function () {
+    Route::middleware(['role:administrador,colaborador'])->group(function () {
         Route::get('/movements', [MovementController::class, 'index'])->name('movements.index');
         Route::get('/movements/create', [MovementController::class, 'create'])->name('movements.create');
         Route::post('/movements', [MovementController::class, 'store'])->name('movements.store');

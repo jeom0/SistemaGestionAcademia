@@ -3,10 +3,10 @@
 <?php $__env->startSection('content'); ?>
 <div class="flex flex-col gap-10 max-w-[1400px] mx-auto">
     <!-- Welcome Header -->
-    <div class="flex justify-between items-center bg-white p-10 rounded-[2.5rem] border border-outline shadow-sm relative overflow-hidden">
+    <div class="flex justify-between items-center bg-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-outline shadow-sm relative overflow-hidden">
         <div class="relative z-10 flex flex-col gap-2">
-            <h1 class="text-4xl font-black text-secondary tracking-tight">Bienvenido, <?php echo e(auth()->user()->name); ?></h1>
-            <p class="text-on-surface-variant font-medium">Panel de control administrativo - Gestión global de la plataforma.</p>
+            <h1 class="text-2xl md:text-4xl font-black text-secondary tracking-tight">Bienvenido, <?php echo e(auth()->user()->name); ?></h1>
+            <p class="text-xs md:text-sm text-on-surface-variant font-medium">Panel de control administrativo - Gestión global de la plataforma.</p>
         </div>
         <!-- Decorative bg -->
         <div class="absolute right-0 top-0 h-full w-1/3 bg-primary/5 -skew-x-12 translate-x-1/2"></div>
@@ -68,6 +68,26 @@
                     <span class="text-4xl font-black text-secondary mt-2 tracking-tighter"><?php echo e(\App\Models\Movement::where('status', 'pendiente')->count()); ?></span>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Chart Analytics Card (Togleable Pie, Line, Bar) -->
+    <div class="bg-white border border-outline rounded-[2.5rem] shadow-premium p-8 md:p-10 flex flex-col gap-6 hover-lift">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h3 class="text-xl font-bold text-secondary">Rendimiento Operativo de la Academia</h3>
+                <p class="text-xs text-on-surface-variant font-medium mt-1">Análisis consolidado de ingresos de cursos y gastos de flota.</p>
+            </div>
+            <!-- Selector de Tipo de Gráfico -->
+            <div class="flex items-center gap-2 bg-surface-variant/30 p-1.5 rounded-2xl border border-outline">
+                <button onclick="changeChartType('bar')" id="btn-chart-bar" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl bg-white text-primary shadow-sm transition-all cursor-pointer">Barras</button>
+                <button onclick="changeChartType('line')" id="btn-chart-line" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl text-on-surface-variant hover:text-secondary transition-all cursor-pointer">Líneas</button>
+                <button onclick="changeChartType('pie')" id="btn-chart-pie" class="px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl text-on-surface-variant hover:text-secondary transition-all cursor-pointer">Pastel</button>
+            </div>
+        </div>
+        
+        <div class="relative w-full h-[320px] md:h-[380px]">
+            <canvas id="dashboardChart"></canvas>
         </div>
     </div>
 
@@ -152,6 +172,140 @@
         </div>
     </div>
 </div>
+
+<?php $__env->startPush('scripts'); ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let currentChart = null;
+    
+    // Calcular datos reales de la base de datos
+    <?php
+        $cursoB1 = \App\Models\Movement::where('description', 'like', '%B1%')->sum('amount');
+        $cursoA2 = \App\Models\Movement::where('description', 'like', '%A2%')->sum('amount');
+        $cursoC2 = \App\Models\Movement::where('description', 'like', '%C2%')->sum('amount');
+        $examenes = \App\Models\Movement::where('description', 'like', '%Examen%')->orWhere('description', 'like', '%Renovación%')->orWhere('description', 'like', '%Trámite%')->sum('amount');
+        $mantenimiento = \App\Models\Movement::where('description', 'like', '%Mantenimiento%')->orWhere('description', 'like', '%Reparación%')->orWhere('description', 'like', '%SOAT%')->sum('amount');
+        $nomina = \App\Models\Movement::where('description', 'like', '%Nómina%')->orWhere('description', 'like', '%Energía%')->orWhere('description', 'like', '%Internet%')->orWhere('description', 'like', '%Oficina%')->sum('amount');
+        $gasolina = \App\Models\Movement::where('description', 'like', '%Gasolina%')->sum('amount');
+    ?>
+
+    const categories = ['Cursos B1', 'Cursos A2', 'Cursos C2', 'Exámenes CRC', 'Mantenimiento', 'Nómina & Serv', 'Gasolina'];
+    const dataValues = [
+        <?php echo e($cursoB1); ?>,
+        <?php echo e($cursoA2); ?>,
+        <?php echo e($cursoC2); ?>,
+        <?php echo e($examenes); ?>,
+        <?php echo e($mantenimiento); ?>,
+        <?php echo e($nomina); ?>,
+        <?php echo e($gasolina); ?>
+
+    ];
+    
+    const colors = [
+        '#006837', // Verde esmeralda
+        '#10b981', // Verde claro
+        '#f59e0b', // Amarillo oro
+        '#6366f1', // Indigo
+        '#ef4444', // Rojo
+        '#3b82f6', // Azul
+        '#6b7280'  // Gris
+    ];
+
+    function buildChart(type) {
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        
+        if (currentChart) {
+            currentChart.destroy();
+        }
+        
+        let config = {
+            type: type,
+            data: {
+                labels: categories,
+                datasets: [{
+                    label: 'Flujo Contable ($ COP)',
+                    data: dataValues,
+                    backgroundColor: type === 'pie' ? colors : colors.map(c => c + '22'),
+                    borderColor: colors,
+                    borderWidth: 2,
+                    fill: type === 'line',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: type === 'pie',
+                        position: 'right',
+                        labels: {
+                            font: {
+                                family: 'Inter',
+                                weight: 'bold',
+                                size: 10
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        
+        if (type !== 'pie') {
+            config.options.scales = {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#f1f5f9'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        },
+                        font: {
+                            family: 'Inter',
+                            size: 10
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            family: 'Inter',
+                            size: 10,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            };
+        }
+        
+        currentChart = new Chart(ctx, config);
+    }
+    
+    function changeChartType(type) {
+        ['bar', 'line', 'pie'].forEach(t => {
+            const btn = document.getElementById('btn-chart-' + t);
+            if (t === type) {
+                btn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+                btn.classList.remove('text-on-surface-variant', 'hover:text-secondary');
+            } else {
+                btn.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+                btn.classList.add('text-on-surface-variant', 'hover:text-secondary');
+            }
+        });
+        
+        buildChart(type);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        buildChart('bar');
+    });
+</script>
+<?php $__env->stopPush(); ?>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/mariapazpelaezrestrepo/Documents/Proyectos Desarrollapp/conduser/resources/views/dashboards/root.blade.php ENDPATH**/ ?>

@@ -1,259 +1,225 @@
 @extends('layouts.app')
 
-@section('page-title', 'Registrar Movimiento')
+@section('title', auth()->user()->isCollaborator() ? 'Registrar Egreso' : 'Registrar Movimiento')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>
-        <i class="fas fa-plus-circle"></i> 
-        {{ auth()->user()->isCollaborator() ? 'Registrar Egreso' : 'Registrar Movimiento' }}
-    </h2>
-    <a href="{{ route('movements.index') }}" class="btn btn-outline-secondary">
-        <i class="fas fa-arrow-left"></i> Volver
-    </a>
-</div>
+<div class="flex flex-col gap-10 max-w-[1200px] mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div class="flex flex-col gap-1">
+            <h1 class="text-4xl font-black text-secondary tracking-tight">
+                {{ auth()->user()->isCollaborator() ? 'Registrar Egreso' : 'Registrar Movimiento' }}
+            </h1>
+            <p class="text-on-surface-variant font-medium">Añade una nueva transacción financiera al sistema de control.</p>
+        </div>
+        <a href="{{ route('movements.index') }}" class="h-12 px-6 border border-outline text-secondary rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-surface-variant transition-all cursor-pointer shrink-0">
+            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            Volver
+        </a>
+    </div>
 
-<div class="row">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">
-                    <i class="fas fa-plus-circle"></i> Información del Movimiento
-                </h5>
-            </div>
-            <div class="card-body">
-                <form action="{{ route('movements.store') }}" method="POST">
-                    @csrf
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="type" class="form-label">
-                                    <i class="fas fa-tag"></i> Tipo de Movimiento
-                                </label>
+    <!-- Core Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <!-- Main Form Column (2/3 Width) -->
+        <div class="lg:col-span-2 flex flex-col gap-8">
+            <div class="bg-white border border-outline rounded-[2.5rem] shadow-premium overflow-hidden">
+                <div class="p-8 md:p-10 border-b border-outline bg-gray-50/20">
+                    <h3 class="text-xl font-bold text-secondary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary fill-1">payments</span>
+                        Información Financiera
+                    </h3>
+                </div>
+                
+                <div class="p-8 md:p-12">
+                    <form action="{{ route('movements.store') }}" method="POST" class="flex flex-col gap-8">
+                        @csrf
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Type of Movement -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Tipo de Movimiento</label>
                                 @if(auth()->user()->isCollaborator())
                                     <input type="hidden" name="type" value="egreso">
-                                    <div class="form-control bg-light">
-                                        <i class="fas fa-arrow-down text-danger"></i> Egreso
-                                        <small class="text-muted">(Solo puedes registrar egresos)</small>
+                                    <div class="w-full h-14 px-5 rounded-2xl bg-surface-variant/40 border border-outline flex items-center gap-3 text-red-600 font-bold select-none">
+                                        <span class="material-symbols-outlined">trending_down</span>
+                                        Egreso <span class="text-[10px] text-on-surface-variant/60 font-semibold uppercase tracking-wider ml-1">(Rol Colaborador)</span>
                                     </div>
                                 @else
-                                    <select class="form-select @error('type') is-invalid @enderror" 
-                                            id="type" 
-                                            name="type" 
-                                            required>
-                                        <option value="">Selecciona tipo...</option>
-                                        <option value="ingreso" {{ old('type') == 'ingreso' ? 'selected' : '' }}>
-                                            <i class="fas fa-arrow-up"></i> Ingreso
-                                        </option>
-                                        <option value="egreso" {{ old('type') == 'egreso' ? 'selected' : '' }}>
-                                            <i class="fas fa-arrow-down"></i> Egreso
-                                        </option>
-                                    </select>
+                                    <div class="relative">
+                                        <select class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium appearance-none" 
+                                                id="type" 
+                                                name="type" 
+                                                required>
+                                            <option value="">Selecciona tipo...</option>
+                                            <option value="ingreso" {{ old('type') == 'ingreso' ? 'selected' : '' }}>Ingreso (+)</option>
+                                            <option value="egreso" {{ old('type') == 'egreso' ? 'selected' : '' }}>Egreso (-)</option>
+                                        </select>
+                                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+                                    </div>
                                     @error('type')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @endif
+                                        <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
+                                    @enderror
                                 @endif
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="amount" class="form-label">
-                                    <i class="fas fa-dollar-sign"></i> Monto ($)
-                                </label>
-                                <input type="number" 
-                                       step="0.01" 
-                                       min="0.01" 
-                                       class="form-control @error('amount') is-invalid @enderror" 
-                                       id="amount" 
-                                       name="amount" 
-                                       placeholder="0.00" 
-                                       required>
+
+                            <!-- Amount -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Monto ($ COP)</label>
+                                <div class="relative">
+                                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-on-surface-variant font-bold">$</span>
+                                    <input type="number" 
+                                           step="0.01" 
+                                           min="0.01" 
+                                           class="w-full h-14 pl-10 pr-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-bold" 
+                                           id="amount" 
+                                           name="amount" 
+                                           value="{{ old('amount') }}" 
+                                           placeholder="0.00" 
+                                           required>
+                                </div>
                                 @error('amount')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Ingresa el monto con dos decimales.</small>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="date" class="form-label">
-                                    <i class="fas fa-calendar"></i> Fecha del Movimiento
-                                </label>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Date -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Fecha del Movimiento</label>
                                 <input type="date" 
-                                       class="form-control @error('date') is-invalid @enderror" 
+                                       class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" 
                                        id="date" 
                                        name="date" 
                                        value="{{ old('date', date('Y-m-d')) }}" 
                                        required>
                                 @error('date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Fecha en que se realizó el movimiento.</small>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="associated_to" class="form-label">
-                                    <i class="fas fa-link"></i> Asociado a (Opcional)
-                                </label>
+
+                            <!-- Associated to -->
+                            <div class="flex flex-col gap-2">
+                                <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Asociado a (Cuenta / Entidad)</label>
                                 <input type="text" 
-                                       class="form-control @error('associated_to') is-invalid @enderror" 
+                                       class="w-full h-14 px-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium" 
                                        id="associated_to" 
                                        name="associated_to" 
                                        value="{{ old('associated_to') }}" 
-                                       placeholder="Cliente, proveedor, servicio, etc.">
+                                       placeholder="Banco Principal, Caja Chica, etc.">
                                 @error('associated_to')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
                                 @enderror
-                                <small class="form-text text-muted">Persona o entidad relacionada con el movimiento.</small>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="description" class="form-label">
-                            <i class="fas fa-align-left"></i> Descripción
-                        </label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" 
-                                  id="description" 
-                                  name="description" 
-                                  rows="4" 
-                                  placeholder="Describe detalladamente el movimiento..." 
-                                  required>{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <small class="form-text text-muted">Describe el motivo o detalle del movimiento (mínimo 3 caracteres).</small>
-                    </div>
-                    
-                    @if(!auth()->user()->isCollaborator())
-                        <div class="alert alert-info">
-                            <h6><i class="fas fa-info-circle"></i> Información del Registro</h6>
-                            <p class="mb-0">
-                                Este movimiento será registrado a nombre de <strong>{{ auth()->user()->name }}</strong> 
-                                ({{ ucfirst(auth()->user()->role) }}) el {{ date('d/m/Y H:i') }}.
-                            </p>
+
+                        <!-- Description -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest ml-1">Descripción</label>
+                            <textarea class="w-full p-5 rounded-2xl bg-surface-variant/30 border border-outline focus:bg-white focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all text-secondary font-medium resize-none" 
+                                      id="description" 
+                                      name="description" 
+                                      rows="4" 
+                                      placeholder="Describe detalladamente el movimiento (mínimo 3 caracteres)..." 
+                                      required>{{ old('description') }}</textarea>
+                            @error('description')
+                                <span class="text-xs text-red-500 font-bold ml-1">{{ $message }}</span>
+                            @enderror
                         </div>
-                    @endif
-                    
-                    <hr>
-                    
-                    <div class="d-flex justify-content-between">
-                        <a href="{{ route('movements.index') }}" class="btn btn-outline-secondary">
-                            <i class="fas fa-arrow-left"></i> Cancelar
-                        </a>
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save"></i> 
-                            {{ auth()->user()->isCollaborator() ? 'Registrar Egreso' : 'Registrar Movimiento' }}
-                        </button>
-                    </div>
-                </form>
+
+                        @if(!auth()->user()->isCollaborator())
+                            <div class="p-5 bg-emerald-50 border border-emerald-100 text-emerald-950 rounded-2xl flex items-start gap-3">
+                                <span class="material-symbols-outlined text-primary shrink-0">info</span>
+                                <p class="text-[11px] font-medium leading-relaxed">
+                                    Este movimiento quedará registrado a nombre del usuario administrativo <strong>{{ auth()->user()->name }}</strong> el {{ date('d/m/Y H:i') }}.
+                                </p>
+                            </div>
+                        @endif
+
+                        <div class="flex flex-col sm:flex-row justify-end gap-4 border-t border-outline pt-8">
+                            <a href="{{ route('movements.index') }}" class="h-14 px-8 rounded-2xl border border-outline text-on-surface-variant font-bold text-sm hover:bg-surface-variant flex items-center justify-center transition-all">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="h-14 px-8 bg-primary text-white rounded-2xl font-bold text-sm hover:shadow-xl hover:shadow-primary/20 transition-all active:scale-[0.98]">
+                                {{ auth()->user()->isCollaborator() ? 'Registrar Egreso' : 'Registrar Movimiento' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="mb-0">
-                    <i class="fas fa-lightbulb"></i> Tips y Recomendaciones
-                </h6>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <h6 class="text-primary">
-                        <i class="fas fa-arrow-up"></i> Ingresos
-                    </h6>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-check text-success"></i> Pagos de clientes</li>
-                        <li><i class="fas fa-check text-success"></i> Ventas de productos</li>
-                        <li><i class="fas fa-check text-success"></i> Servicios prestados</li>
-                        <li><i class="fas fa-check text-success"></i> Inversiones recibidas</li>
-                    </ul>
-                </div>
+
+        <!-- Sidebar Tips & Permissions Column (1/3 Width) -->
+        <div class="flex flex-col gap-8">
+            <!-- Concept Tips Card -->
+            <div class="bg-white border border-outline rounded-[2.5rem] p-8 shadow-premium flex flex-col gap-6">
+                <h4 class="text-xs font-black text-secondary uppercase tracking-widest border-b border-outline pb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-amber-500 fill-1">lightbulb</span>
+                    Recomendaciones
+                </h4>
                 
-                <div class="mb-0">
-                    <h6 class="text-danger">
-                        <i class="fas fa-arrow-down"></i> Egresos
-                    </h6>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-check text-success"></i> Compras de suministros</li>
-                        <li><i class="fas fa-check text-success"></i> Pago de servicios</li>
-                        <li><i class="fas fa-check text-success"></i> Gastos operativos</li>
-                        <li><i class="fas fa-check text-success"></i> Salarios y honorarios</li>
-                    </ul>
+                <div class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-2">
+                        <h5 class="text-xs font-black text-primary uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">trending_up</span> Ingresos
+                        </h5>
+                        <ul class="text-xs font-medium text-on-surface-variant flex flex-col gap-1.5 pl-5 list-disc leading-relaxed">
+                            <li>Pagos de matrículas o cursos.</li>
+                            <li>Ventas de guías y exámenes.</li>
+                            <li>Incentivos u otros abonos.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <h5 class="text-xs font-black text-red-500 uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">trending_down</span> Egresos
+                        </h5>
+                        <ul class="text-xs font-medium text-on-surface-variant flex flex-col gap-1.5 pl-5 list-disc leading-relaxed">
+                            <li>Combustible y SOAT de flota.</li>
+                            <li>Mantenimiento mecánico de vehículos.</li>
+                            <li>Suministros de oficina y servicios públicos.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        @if(auth()->user()->isCollaborator())
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">
-                        <i class="fas fa-info-circle"></i> Tu Permisos
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes registrar egresos propios</small>
+
+            <!-- Role Permissions Card -->
+            <div class="bg-white border border-outline rounded-[2.5rem] p-8 shadow-premium flex flex-col gap-4">
+                <h4 class="text-xs font-black text-secondary uppercase tracking-widest border-b border-outline pb-4 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-indigo-600 fill-1">shield</span>
+                    Permisos de Cuenta
+                </h4>
+                
+                <ul class="flex flex-col gap-3">
+                    @if(auth()->user()->isCollaborator())
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Registro exclusivo de egresos de caja.</span>
                         </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes ver tus movimientos</small>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Gestión de tu propio historial personal.</span>
                         </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes editar tus movimientos</small>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-red-500 text-[18px] shrink-0">cancel</span>
+                            <span>No está autorizado a registrar ingresos.</span>
                         </li>
-                        <li class="mb-0">
-                            <i class="fas fa-times text-danger"></i>
-                            <small>No puedes registrar ingresos</small>
+                    @else
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Control completo de ingresos y egresos.</span>
                         </li>
-                    </ul>
-                </div>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Aprobación y edición global del historial.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5 text-xs text-on-surface-variant font-medium leading-relaxed">
+                            <span class="material-symbols-outlined text-emerald-500 text-[18px] shrink-0">check_circle</span>
+                            <span>Permisos de eliminación autorizados.</span>
+                        </li>
+                    @endif
+                </ul>
             </div>
-        @else
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h6 class="mb-0">
-                        <i class="fas fa-shield-alt"></i> Tus Permisos
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes registrar ingresos y egresos</small>
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes ver todos los movimientos</small>
-                        </li>
-                        <li class="mb-2">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes editar cualquier movimiento</small>
-                        </li>
-                        <li class="mb-0">
-                            <i class="fas fa-check text-success"></i>
-                            <small>Puedes eliminar movimientos</small>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        @endif
-        
-        <div class="alert alert-warning mt-3">
-            <h6><i class="fas fa-exclamation-triangle"></i> Importante</h6>
-            <p class="mb-0">
-                <strong>Todos los movimientos quedan registrados con tu nombre y fecha de registro.</strong><br>
-                Mantén la información precisa y actualizada.
-            </p>
         </div>
     </div>
 </div>

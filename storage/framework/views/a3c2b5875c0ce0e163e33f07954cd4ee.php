@@ -3,18 +3,18 @@
 <?php $__env->startSection('content'); ?>
 <div class="flex flex-col gap-10 max-w-[1400px] mx-auto">
     <!-- Header Area (Image 1 Style) -->
-    <div class="flex justify-between items-center">
+    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <div class="flex flex-col gap-1">
-            <h1 class="text-4xl font-black text-secondary tracking-tight">
+            <h1 class="text-3xl md:text-4xl font-black text-secondary tracking-tight">
                 <?php echo e(request()->query('status') === 'pendiente' ? 'Movimientos Pendientes' : 'Historial de Movimientos'); ?>
 
             </h1>
-            <p class="text-on-surface-variant font-medium">
+            <p class="text-xs md:text-sm text-on-surface-variant font-medium">
                 <?php echo e(request()->query('status') === 'pendiente' ? 'Gestione los registros que aún requieren atención.' : 'Listado completo de todas las transacciones del sistema.'); ?>
 
             </p>
         </div>
-        <a href="<?php echo e(route('movements.create')); ?>" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98]">
+        <a href="<?php echo e(route('movements.create')); ?>" class="h-12 px-6 bg-primary text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] shrink-0">
             <span class="material-symbols-outlined text-[20px] fill-1">add</span>
             Crear
         </a>
@@ -23,7 +23,7 @@
     <?php if(!request()->filled('status')): ?>
     <!-- Quick Entry Form (Image 1 Style) -->
     <div class="bg-white border border-outline rounded-[2rem] shadow-sm overflow-hidden">
-        <div class="p-10 flex flex-col gap-8">
+        <div class="p-6 md:p-10 flex flex-col gap-8">
             <form action="<?php echo e(route('movements.store')); ?>" method="POST" class="flex flex-col gap-6">
                 <?php echo csrf_field(); ?>
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -86,9 +86,9 @@
 
     <!-- Recent Movements Table (Image 1/3 Style) -->
     <div class="bg-white border border-outline rounded-[2rem] shadow-sm overflow-hidden">
-        <div class="p-8 border-b border-outline flex justify-between items-center bg-gray-50/30">
-            <h3 class="text-xl font-bold text-secondary">Movimientos Recientes</h3>
-            <button class="w-10 h-10 rounded-xl hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-all">
+        <div class="p-6 md:p-8 border-b border-outline flex justify-between items-center bg-gray-50/30">
+            <h3 class="text-lg md:text-xl font-bold text-secondary">Movimientos Recientes</h3>
+            <button class="w-10 h-10 rounded-xl hover:bg-surface-variant flex items-center justify-center text-on-surface-variant transition-all cursor-pointer">
                 <span class="material-symbols-outlined">filter_list</span>
             </button>
         </div>

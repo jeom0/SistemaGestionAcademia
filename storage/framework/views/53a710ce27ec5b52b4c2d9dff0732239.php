@@ -48,19 +48,34 @@
 </head>
 <body class="bg-surface text-on-surface antialiased min-h-screen">
     <?php if(auth()->check()): ?>
-        <div class="flex">
+        <div class="flex" x-data="{ sidebarOpen: false }">
+            <!-- Overlay dark screen on mobile -->
+            <div x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak class="fixed inset-0 z-40 bg-black/40 md:hidden transition-opacity"></div>
+
             <?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             
-            <div class="flex-1 flex flex-col min-h-screen">
-                <!-- Header (Minimal Style) -->
-                <header class="h-20 bg-white border-b border-outline flex items-center justify-between px-10 sticky top-0 z-30 shadow-sm" x-data="{ notificationsOpen: false, profileOpen: false }">
-                    <div class="flex items-center gap-10">
-                    <nav class="hidden md:flex items-center gap-4">
-                        <a href="<?php echo e(route('audit.index')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('audit.index') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Auditoría</a>
-                        <a href="<?php echo e(route('payroll.comisiones')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('payroll.comisiones') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Comisión</a>
-                        <a href="<?php echo e(route('payroll.descuentos')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('payroll.descuentos') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Descuentos</a>
-                    </nav>
+            <div class="flex-1 flex flex-col min-h-screen min-w-0">
+                <!-- Header (Responsive Style) -->
+                <header class="h-20 bg-white border-b border-outline flex items-center justify-between px-4 md:px-10 sticky top-0 z-30 shadow-sm" x-data="{ notificationsOpen: false, profileOpen: false }">
+                    <div class="flex items-center gap-4 md:gap-10">
+                        <!-- Botón Hamburguesa Móvil -->
+                        <button @click="sidebarOpen = !sidebarOpen" class="w-12 h-12 flex items-center justify-center rounded-2xl hover:bg-surface-variant transition-all text-on-surface-variant md:hidden cursor-pointer">
+                            <span class="material-symbols-outlined text-[26px]">menu</span>
+                        </button>
+
+                        <!-- Logo Móvil -->
+                        <div class="flex md:hidden items-center shrink-0">
+                            <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Conduser" class="h-8 w-auto">
+                        </div>
+
+                        <!-- Enlaces de navegación en escritorio -->
+                        <nav class="hidden md:flex items-center gap-4">
+                            <a href="<?php echo e(route('audit.index')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('audit.index') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Auditoría</a>
+                            <a href="<?php echo e(route('payroll.comisiones')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('payroll.comisiones') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Comisión</a>
+                            <a href="<?php echo e(route('payroll.descuentos')); ?>" class="px-6 py-2 text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all <?php echo e(request()->routeIs('payroll.descuentos') ? 'bg-primary-light text-primary shadow-sm' : 'text-on-surface-variant/60 hover:bg-surface-variant hover:text-secondary'); ?>">Descuentos</a>
+                        </nav>
                     </div>
+
 
                     <div class="flex items-center gap-8">
                         <div class="flex items-center gap-4">
@@ -141,7 +156,7 @@
                     </div>
                 </header>
 
-                <main class="flex-1 p-10 bg-surface/50">
+                <main class="flex-1 p-4 md:p-10 bg-surface/50">
                     <?php if(session('success')): ?>
                         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95" class="mb-8 p-5 bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-3xl shadow-xl shadow-emerald-900/5 flex items-center gap-4">
                             <span class="material-symbols-outlined text-primary fill-1">check_circle</span>

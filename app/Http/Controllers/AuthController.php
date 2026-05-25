@@ -28,7 +28,7 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ], [
-            'email.required' => 'El usuario o correo electrónico es obligatorio.',
+            'email.required' => 'El correo electrónico es obligatorio.',
             'email.email' => 'El formato del correo electrónico es inválido.',
             'password.required' => 'La contraseña es obligatoria.',
         ]);
@@ -39,46 +39,37 @@ class AuthController extends Controller
                 ->withInput($request->except('password'));
         }
 
-        // First check if the user exists
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
             return back()
-                ->withErrors(['email' => 'El usuario o correo electrónico ingresado no existe en nuestro sistema.'])
+                ->withErrors(['email' => 'El usuario ingresado no existe en nuestro sistema.'])
                 ->withInput($request->except('password'));
         }
 
-        // Check if the password is correct
-        if (!Hash::check($request->password, $user->password)) {
-            return back()
-                ->withErrors(['password' => 'La contraseña ingresada es incorrecta.'])
-                ->withInput($request->except('password'));
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            // Check if user is active
+            if (!$user->isActive()) {
+                Auth::logout();
+                return back()
+                    ->withErrors(['email' => 'Tu cuenta está inactiva. Contacta al administrador.'])
+                    ->withInput($request->except('password'));
+            }
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('/dashboard');
         }
 
-        // Check if user is active
-        if (!$user->isActive()) {
-            return back()
-                ->withErrors(['email' => 'Tu cuenta está inactiva. Contacta al administrador.'])
-                ->withInput($request->except('password'));
-        }
-
-        // Log the user in
-        Auth::login($user);
-        $request->session()->regenerate();
-
-        return redirect()->intended('/dashboard');
+        return back()
+            ->withErrors(['password' => 'La contraseña ingresada es incorrecta.'])
+            ->withInput($request->except('password'));
     }
 
     /**
-     * Show link request form for password recovery
-     */
-    public function showLinkRequestForm()
-    {
-        return view('auth.passwords.email');
-    }
-
-    /**
-     * Send reset link email
+     * Handle password reset link request
      */
     public function sendResetLinkEmail(Request $request)
     {
@@ -99,11 +90,12 @@ class AuthController extends Controller
 
         if (!$user) {
             return back()
-                ->withErrors(['email' => 'El usuario o correo electrónico ingresado no existe en nuestro sistema.'])
+                ->withErrors(['email' => 'No podemos encontrar un usuario con esa dirección de correo electrónico.'])
                 ->withInput();
         }
 
-        return back()->with('success', 'Hemos enviado las instrucciones para restablecer tu contraseña a tu correo electrónico.');
+        // Return success message
+        return back()->with('status', 'Hemos enviado por correo electrónico el enlace para restablecer su contraseña.');
     }
 
     /**

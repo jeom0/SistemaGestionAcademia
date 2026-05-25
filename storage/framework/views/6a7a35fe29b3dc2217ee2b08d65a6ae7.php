@@ -117,7 +117,7 @@
 
                             </td>
                             <td class="px-8 py-6 text-right">
-                                <div class="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all">
+                                <div class="flex justify-end gap-3 md:opacity-0 md:group-hover:opacity-100 transition-all">
                                     <a href="<?php echo e(route('root.users.edit', $user)); ?>" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-outline text-on-surface-variant hover:text-primary hover:border-primary transition-all shadow-sm">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
                                     </a>

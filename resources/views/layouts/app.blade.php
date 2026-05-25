@@ -54,7 +54,7 @@
 
             @include('layouts.sidebar')
             
-            <div class="flex-1 flex flex-col min-h-screen">
+            <div class="flex-1 flex flex-col min-h-screen min-w-0">
                 <!-- Header (Responsive Style) -->
                 <header class="h-20 bg-white border-b border-outline flex items-center justify-between px-4 md:px-10 sticky top-0 z-30 shadow-sm" x-data="{ notificationsOpen: false, profileOpen: false }">
                     <div class="flex items-center gap-4 md:gap-10">
