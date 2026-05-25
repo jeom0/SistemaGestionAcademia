@@ -9,14 +9,14 @@
         <!-- Base Background (Green waves + original cards) -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         
-        <!-- Overlay Background (High quality transparent cards, perfectly aligned, no hover movement) -->
-        <div class="absolute inset-0 bg-cover bg-center z-10" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
-
         <!-- Abstract shadow mask to integrate UI premium texture -->
-        <div class="absolute inset-0 bg-emerald-950/20 z-20 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
 
         <!-- Smooth white gradient transition at the right edge to integrate with form -->
-        <div class="absolute inset-y-0 right-0 w-64 bg-gradient-to-r from-transparent via-surface/60 to-surface z-30 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-64 bg-gradient-to-r from-transparent via-surface/60 to-surface z-20 pointer-events-none"></div>
+
+        <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
+        <div class="absolute inset-0 bg-cover bg-center z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
     </div>
 
     <!-- Right Column: Login Form -->
