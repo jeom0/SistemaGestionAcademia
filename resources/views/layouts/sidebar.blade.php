@@ -13,7 +13,7 @@
     <div class="px-8 py-6 flex items-center gap-4">
         <div class="w-12 h-12 rounded-full bg-slate-200 overflow-hidden flex-shrink-0 border border-outline shadow-sm">
             @if(auth()->user()->avatar)
-                <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full object-cover">
+                <img src="{{ asset(auth()->user()->avatar) }}" alt="Avatar" class="w-full h-full object-cover">
             @else
                 <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=006837&color=fff" alt="Avatar" class="w-full h-full object-cover">
             @endif

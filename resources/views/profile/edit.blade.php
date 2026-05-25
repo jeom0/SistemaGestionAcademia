@@ -30,7 +30,7 @@
                     <div class="relative group cursor-pointer" onclick="document.getElementById('avatar').click()">
                         <div class="w-32 h-32 rounded-[2rem] overflow-hidden border-4 border-surface-variant group-hover:border-primary transition-all shadow-lg">
                             @if(auth()->user()->avatar)
-                                <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="w-full h-full object-cover">
+                                <img src="{{ asset(auth()->user()->avatar) }}" class="w-full h-full object-cover">
                             @else
                                 <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=006837&color=fff&size=128" class="w-full h-full">
                             @endif

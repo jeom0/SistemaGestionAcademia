@@ -122,7 +122,7 @@
                             <div class="relative" @click.away="profileOpen = false">
                                 <button @click="profileOpen = !profileOpen; notificationsOpen = false" class="w-12 h-12 flex items-center justify-center rounded-2xl overflow-hidden border-2 border-outline hover:border-primary transition-all shadow-sm cursor-pointer">
                                     @if(auth()->user()->avatar)
-                                        <img src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="User" class="w-full h-full object-cover">
+                                        <img src="{{ asset(auth()->user()->avatar) }}" alt="User" class="w-full h-full object-cover">
                                     @else
                                         <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=006837&color=fff" alt="User" class="w-full h-full">
                                     @endif
