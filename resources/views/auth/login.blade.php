@@ -13,25 +13,21 @@
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
 
         <!-- Smooth gradient transition: Bottom fade for mobile, Right fade for desktop -->
-        <!-- Covers 100% width/height to make the fade start much earlier and softer -->
-        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-transparent lg:via-surface/20 to-surface z-20 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/10 lg:via-surface/20 to-surface z-20 pointer-events-none"></div>
 
-        <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
-        <!-- We keep the gradient behind this so the cards pop! -->
-        <div class="absolute inset-0 bg-contain lg:bg-cover bg-bottom lg:bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
+        <!-- Overlay Background -->
+        <div class="absolute inset-0 bg-contain lg:bg-cover bg-center lg:bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
         
-        <!-- Additional gradient ON TOP of everything just to soften the harsh edges where it touches the form -->
-        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/60 lg:via-transparent to-surface z-40 pointer-events-none"></div>
+        <!-- Additional gradient ON TOP of everything -->
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/30 lg:via-transparent to-surface z-40 pointer-events-none"></div>
     </div>
 
     <!-- Right Column: Login Form -->
-    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative">
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 lg:-ml-0 -mt-10 lg:mt-0 rounded-t-[3rem] lg:rounded-none">
         <div class="w-full max-w-md">
-            <!-- Avatar Section -->
+            <!-- Logo Section -->
             <div class="flex justify-center mb-12">
-                <div class="w-20 h-20 bg-[#f1f5f9] rounded-full flex items-center justify-center border border-outline shadow-sm overflow-hidden">
-                    <span class="material-symbols-outlined text-on-surface-variant text-[40px]">person</span>
-                </div>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo Conduser" class="h-24 w-auto object-contain drop-shadow-sm">
             </div>
 
             <!-- Login Form -->
