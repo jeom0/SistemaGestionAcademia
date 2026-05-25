@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama Entidad-Relación - Academia Conduser</title>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ 
+          startOnLoad: true, 
+          theme: 'default',
+          securityLevel: 'loose',
+          er: {
+              layoutDirection: 'TB',
+              minEntityWidth: 150,
+              minEntityHeight: 100,
+              entityPadding: 20,
+              stroke: 'gray',
+              fill: 'white'
+          }
+      });
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            width: 100%;
+        }
+        h1 {
+            color: #006837;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        .instructions {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f1f5f9;
+            border-left: 5px solid #006837;
+            border-radius: 8px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #006837;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diagrama Entidad-Relación (ER)</h1>
+        <p class="subtitle">Sistema de Gestión y Control Financiero - Academia Conduser</p>
+        
+        <div class="mermaid">
+            erDiagram
+                USUARIOS {
+                    bigint id PK "Identificador único"
+                    string name "Nombre completo"
+                    string email "Correo electrónico (Único)"
+                    string role "Rol (root, administrador, colaborador)"
+                    string avatar "Ruta de la imagen de perfil"
+                    timestamp email_verified_at "Fecha de verificación"
+                    string password "Contraseña encriptada"
+                    string remember_token "Token de sesión"
+                    timestamp created_at "Fecha de creación"
+                    timestamp updated_at "Fecha de actualización"
+                }
+
+                CUENTAS {
+                    bigint id PK "Identificador único"
+                    string name "Nombre de la cuenta (Ej: Banco, Caja Menor)"
+                    decimal initial_balance "Saldo inicial"
+                    decimal current_balance "Saldo actual"
+                    boolean status "Estado (Activa/Inactiva)"
+                    string color "Color en la interfaz"
+                    timestamp created_at "Fecha de creación"
+                    timestamp updated_at "Fecha de actualización"
+                }
+
+                CATEGORIAS {
+                    bigint id PK "Identificador único"
+                    string name "Nombre de la categoría"
+                    string type "Tipo (ingreso, egreso, transferencia)"
+                    text description "Descripción de la categoría"
+                    string color "Color representativo"
+                    string icon "Icono representativo"
+                    timestamp created_at "Fecha de creación"
+                    timestamp updated_at "Fecha de actualización"
+                }
+
+                MOVIMIENTOS {
+                    bigint id PK "Identificador único"
+                    string type "Tipo (ingreso, egreso, transferencia)"
+                    decimal amount "Monto de la transacción"
+                    text description "Motivo o descripción"
+                    date date "Fecha del movimiento"
+                    bigint account_id FK "Cuenta origen"
+                    bigint destination_account_id FK "Cuenta destino (Opcional)"
+                    bigint category_id FK "Categoría"
+                    bigint user_id FK "Usuario responsable"
+                    string voucher_path "Ruta del comprobante adjunto"
+                    string status "Estado (completado, pendiente)"
+                    timestamp created_at "Fecha de creación"
+                    timestamp updated_at "Fecha de actualización"
+                }
+
+                AUDITORIA_GLOBAL {
+                    bigint id PK "Identificador único"
+                    bigint user_id FK "Usuario que realizó la acción"
+                    string action "Acción realizada (crear, editar, eliminar)"
+                    string model_type "Tabla afectada"
+                    bigint model_id "ID del registro afectado"
+                    text details "Detalles técnicos del cambio"
+                    string ip_address "Dirección IP del usuario"
+                    timestamp created_at "Fecha de la acción"
+                    timestamp updated_at "Fecha de actualización"
+                }
+
+                %% Relaciones (Cardinalidad)
+                USUARIOS ||--o{ MOVIMIENTOS : "Registra"
+                USUARIOS ||--o{ AUDITORIA_GLOBAL : "Genera"
+                CUENTAS ||--o{ MOVIMIENTOS : "Es origen de"
+                CUENTAS ||--o{ MOVIMIENTOS : "Es destino de"
+                CATEGORIAS ||--o{ MOVIMIENTOS : "Clasifica"
+        </div>
+
+        <div class="instructions">
+            <h3>Instrucciones para Exportar</h3>
+            <p>1. Para guardar este diagrama como imagen para el profesor, simplemente haz clic derecho sobre el dibujo y selecciona <strong>"Copiar imagen"</strong> o <strong>"Guardar imagen como..."</strong> (disponible en la mayoría de navegadores modernos).</p>
+            <p>2. También puedes presionar <strong>Ctrl + P</strong> (o Cmd + P en Mac) y guardar esta página completa como archivo <strong>PDF</strong>.</p>
+        </div>
+    </div>
+</body>
+</html>
