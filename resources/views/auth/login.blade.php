@@ -5,7 +5,7 @@
 @section('content')
 <div class="min-h-screen flex flex-col lg:flex-row antialiased" x-data="{ helpModalOpen: false }">
     <!-- Image / Branding Column -->
-    <div class="w-full lg:w-[55%] h-64 md:h-80 lg:h-auto relative overflow-hidden shrink-0">
+    <div class="w-full lg:w-[55%] min-h-[35vh] sm:min-h-[40vh] lg:h-auto relative overflow-hidden shrink-0">
         <!-- Base Background (Green waves) -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         
@@ -18,10 +18,10 @@
 
         <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
         <!-- We keep the gradient behind this so the cards pop! -->
-        <div class="absolute inset-0 bg-cover bg-center z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
+        <div class="absolute inset-0 bg-contain lg:bg-cover bg-bottom lg:bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
         
         <!-- Additional gradient ON TOP of everything just to soften the harsh edges where it touches the form -->
-        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-transparent to-surface z-40 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-surface/60 lg:via-transparent to-surface z-40 pointer-events-none"></div>
     </div>
 
     <!-- Right Column: Login Form -->

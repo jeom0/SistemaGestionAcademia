@@ -65,8 +65,8 @@
                         </button>
 
                         <!-- Logo Móvil -->
-                        <div class="flex md:hidden items-center shrink-0">
-                            <img src="{{ asset('images/logo.png') }}" alt="Conduser" class="h-8 w-auto">
+                        <div class="hidden">
+                            <!-- Removido por petición -->
                         </div>
 
                         <!-- Enlaces de navegación en escritorio -->
@@ -89,7 +89,7 @@
                                     @endif
                                 </button>
                                 
-                                <div x-show="notificationsOpen" x-cloak x-transition class="absolute right-0 mt-3 w-96 bg-white border border-outline rounded-[2rem] shadow-2xl p-6 z-50">
+                                <div x-show="notificationsOpen" x-cloak x-transition class="absolute right-[-40px] sm:right-0 mt-3 w-screen max-w-[calc(100vw-3rem)] sm:max-w-sm bg-white border border-outline rounded-[2rem] shadow-2xl p-6 z-50 origin-top-right">
                                     <div class="flex items-center justify-between mb-4">
                                         <h4 class="text-sm font-black text-secondary uppercase tracking-widest flex items-center gap-2">
                                             Trazabilidad
