@@ -13,7 +13,7 @@
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
 
         <!-- Smooth white gradient transition at the right edge to integrate with form -->
-        <div class="absolute inset-y-0 right-0 w-full max-w-[400px] xl:max-w-[500px] bg-gradient-to-r from-transparent via-surface/40 to-surface z-20 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-[80%] bg-gradient-to-r from-transparent via-surface/40 to-surface z-20 pointer-events-none"></div>
 
         <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
         <div class="absolute inset-0 bg-cover bg-center z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
