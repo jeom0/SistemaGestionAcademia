@@ -3,24 +3,29 @@
 @section('title', 'Iniciar Sesión')
 
 @section('content')
-<div class="min-h-screen flex antialiased" x-data="{ helpModalOpen: false }">
-    <!-- Left Column: Branding with Beautiful Vector Illustration -->
-    <div class="hidden lg:flex w-[55%] relative overflow-hidden">
-        <!-- Base Background (Green waves + original cards) -->
+<div class="min-h-screen flex flex-col lg:flex-row antialiased" x-data="{ helpModalOpen: false }">
+    <!-- Image / Branding Column -->
+    <div class="w-full lg:w-[55%] h-64 md:h-80 lg:h-auto relative overflow-hidden shrink-0">
+        <!-- Base Background (Green waves) -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         
         <!-- Abstract shadow mask to integrate UI premium texture -->
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
 
-        <!-- Smooth white gradient transition at the right edge to integrate with form -->
-        <div class="absolute inset-y-0 right-0 w-[80%] bg-gradient-to-r from-transparent via-surface/40 to-surface z-20 pointer-events-none"></div>
+        <!-- Smooth gradient transition: Bottom fade for mobile, Right fade for desktop -->
+        <!-- Covers 100% width/height to make the fade start much earlier and softer -->
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-transparent lg:via-surface/20 to-surface z-20 pointer-events-none"></div>
 
         <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
+        <!-- We keep the gradient behind this so the cards pop! -->
         <div class="absolute inset-0 bg-cover bg-center z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
+        
+        <!-- Additional gradient ON TOP of everything just to soften the harsh edges where it touches the form -->
+        <div class="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent via-transparent to-surface z-40 pointer-events-none"></div>
     </div>
 
     <!-- Right Column: Login Form -->
-    <div class="w-full lg:w-[45%] bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative">
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative">
         <div class="w-full max-w-md">
             <!-- Avatar Section -->
             <div class="flex justify-center mb-12">
