@@ -7,9 +7,13 @@
     <!-- Left Column: Branding with Beautiful Vector Illustration (Image mockup cover) -->
     <div class="hidden lg:flex w-[55%] relative flex-col items-center justify-center overflow-hidden bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');">
         <!-- Abstract shadow mask to integrate UI premium texture -->
-        <div class="absolute inset-0 bg-emerald-950/5"></div>
+        <div class="absolute inset-0 bg-emerald-950/20"></div>
+        
+        <!-- Superimposed Floating Mockup Image -->
+        <img src="{{ asset('images/login_bg1.png') }}" class="relative z-10 max-w-[80%] xl:max-w-[70%] drop-shadow-2xl hover:scale-105 transition-transform duration-700 ease-out" alt="Conduser Dashboard Preview">
+
         <!-- Smooth white gradient transition at the right edge to integrate with form -->
-        <div class="absolute inset-y-0 right-0 w-64 bg-gradient-to-r from-transparent via-surface/60 to-surface"></div>
+        <div class="absolute inset-y-0 right-0 w-64 bg-gradient-to-r from-transparent via-surface/60 to-surface z-20 pointer-events-none"></div>
     </div>
 
     <!-- Right Column: Login Form -->
