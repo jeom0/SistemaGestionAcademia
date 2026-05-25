@@ -49,7 +49,7 @@
 </head>
 <body class="bg-surface text-on-surface antialiased min-h-screen">
     @if(auth()->check())
-        <div class="flex" x-data="{ sidebarOpen: false }">
+        <div class="flex" x-data="{ sidebarOpen: false }" x-effect="document.body.style.overflow = sidebarOpen ? 'hidden' : ''">
             <!-- Overlay dark screen on mobile -->
             <div x-show="sidebarOpen" @click="sidebarOpen = false" x-cloak class="fixed inset-0 z-40 bg-black/40 md:hidden transition-opacity"></div>
 
