@@ -202,9 +202,9 @@ La siguiente imagen fue exigida explícitamente como evidencia documental de la 
 
 ### 📸 Prototipo / Mockup Original
 Validación del plan de diseño frente a lo construido en código.
-![Mockup](mockups/stich_conduser_admin_dashboard_mockup/accounting_movements_admin/screen.png)
-![Mockup](mockups/stich_conduser_admin_dashboard_mockup/movements_view_collaborator/screen.png)
-![Mockup](mockups/stich_conduser_admin_dashboard_mockup/login_conduser/screen.png)
+![Mockup](mockups/stitch_conduser_admin_dashboard_mockup/accounting_movements_admin/screen.png)
+![Mockup](mockups/stitch_conduser_admin_dashboard_mockup/movements_view_collaborator/screen.png)
+![Mockup](mockups/stitch_conduser_admin_dashboard_mockup/login_conduser/screen.png)
 ### 🎥 Validaciones de Comportamiento Dinámico (Selenium Automation)
 
 #### Panel de Autenticación
