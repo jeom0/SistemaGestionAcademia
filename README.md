@@ -55,8 +55,9 @@ Para facilitar la calificación exhaustiva del proyecto, hemos consolidado todos
 
 ### 1. Documentación Arquitectónica y Diseño (Carpeta `docs/`)
 Toda la planeación y estructura de ingeniería de software se encuentra aquí:
+- 📄 `docs/casos_uso.md` - Documentación formal que describe paso a paso los **Casos de Uso** principales del sistema (Autenticación, Middleware, Roles).
 - 📄 `docs/DIAGRAMA_ENTIDAD_RELACION.md` - Especificación completa de las tablas, campos y el **Diagrama Entidad-Relación** del modelo de datos.
-- 📄 `docs/Casos_Pruebas_Software.tex` - Documentación formal (formato LaTeX) detallando los **Casos de Uso** estructurados, actores y escenarios del sistema.
+- 📄 `docs/Casos_Pruebas_Software.tex` - Documentación formal (formato LaTeX) detallando escenarios de pruebas de software.
 - 📄 `docs/INFORME_PRUEBAS.md` - Informe técnico detallando la estrategia de calidad de software.
 - 🖼️ `docs/conduser_mockup.png` y `mockup_layout.json` - Prototipos iniciales de interfaz y diseño (UI/UX) que sirvieron de base para el desarrollo.
 - 👨‍💻 `docs/test_integration.php` - Script de validación de integración.
