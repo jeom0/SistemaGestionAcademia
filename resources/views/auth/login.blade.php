@@ -14,7 +14,7 @@
     </div>
 
     <!-- ==================== DESKTOP HEADER (Original Intact) ==================== -->
-    <div class="hidden lg:block w-[60%] h-auto relative overflow-hidden shrink-0">
+    <div class="hidden lg:block w-[55%] h-auto relative overflow-hidden shrink-0">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-surface/20 to-surface z-20 pointer-events-none"></div>
@@ -23,8 +23,8 @@
     </div>
 
     <!-- Right Column: Login Form -->
-    <!-- Mobile: -mt-10 vertical overlap. Desktop: -ml-16 horizontal overlap -->
-    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 lg:-ml-12 rounded-t-[2.5rem] lg:rounded-t-none lg:rounded-l-[3rem] shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)]">
+    <!-- Mobile: -mt-10 vertical overlap. Desktop: perfect side-by-side (NO overlap) -->
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 lg:-ml-0 rounded-t-[2.5rem] lg:rounded-none shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-none">
         <div class="w-full max-w-md">
             
             <!-- ==================== MOBILE LOGO ==================== -->
@@ -34,10 +34,10 @@
                 </div>
             </div>
 
-            <!-- ==================== DESKTOP LOGO ==================== -->
+            <!-- ==================== DESKTOP AVATAR (Original Intact) ==================== -->
             <div class="hidden lg:flex justify-center mb-12">
-                <div class="w-20 h-20 bg-[#f1f5f9] rounded-full flex items-center justify-center border border-outline shadow-sm overflow-hidden p-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo Conduser" class="w-full h-full object-contain">
+                <div class="w-20 h-20 bg-[#f1f5f9] rounded-full flex items-center justify-center border border-outline shadow-sm overflow-hidden">
+                    <span class="material-symbols-outlined text-on-surface-variant text-[40px]">person</span>
                 </div>
             </div>
 
