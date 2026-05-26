@@ -14,7 +14,7 @@
     </div>
 
     <!-- ==================== DESKTOP HEADER (Original Intact) ==================== -->
-    <div class="hidden lg:block w-[55%] h-auto relative overflow-hidden shrink-0">
+    <div class="hidden lg:block w-[60%] h-auto relative overflow-hidden shrink-0">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-surface/20 to-surface z-20 pointer-events-none"></div>
@@ -23,8 +23,8 @@
     </div>
 
     <!-- Right Column: Login Form -->
-    <!-- Mobile: -mt-10 overlap. Desktop: mt-0, perfect side-by-side -->
-    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 rounded-t-[2.5rem] lg:rounded-none shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-none">
+    <!-- Mobile: -mt-10 vertical overlap. Desktop: -ml-16 horizontal overlap -->
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 lg:-ml-12 rounded-t-[2.5rem] lg:rounded-t-none lg:rounded-l-[3rem] shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-[-20px_0_40px_rgba(0,0,0,0.1)]">
         <div class="w-full max-w-md">
             
             <!-- ==================== MOBILE LOGO ==================== -->
