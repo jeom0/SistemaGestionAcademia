@@ -56,6 +56,8 @@ Para facilitar la calificación exhaustiva del proyecto, hemos consolidado todos
 ### 1. Documentación Arquitectónica y Diseño (Carpeta `docs/`)
 Toda la planeación y estructura de ingeniería de software se encuentra aquí:
 - 📄 `docs/casos_uso.md` - Documentación formal que describe paso a paso los **Casos de Uso** principales del sistema (Autenticación, Middleware, Roles).
+- 📄 `docs/diagramas_flujo.md` - Documentación técnica con **Diagramas de Flujo (Mermaid)** ilustrando el ciclo de vida y la interacción del sistema de autenticación.
+- 📄 `docs/entradas_salidas.md` - Especificación detallada de **Entradas y Salidas** (parámetros y respuestas) de los módulos del sistema.
 - 📄 `docs/DIAGRAMA_ENTIDAD_RELACION.md` - Especificación completa de las tablas, campos y el **Diagrama Entidad-Relación** del modelo de datos.
 - 📄 `docs/Casos_Pruebas_Software.tex` - Documentación formal (formato LaTeX) detallando escenarios de pruebas de software.
 - 📄 `docs/INFORME_PRUEBAS.md` - Informe técnico detallando la estrategia de calidad de software.
