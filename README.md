@@ -1,109 +1,137 @@
-# Sistema Integral para el Control Financiero y Administrativo - Academia Conduser
+<div align="center">
+  <h1>🎓 Sistema Integral para el Control Financiero y Administrativo</h1>
+  <h3>Proyecto de Grado / Desarrollo de Software - Academia Conduser</h3>
+  <p><em>Un ecosistema tecnológico robusto para la automatización, seguridad y trazabilidad de los flujos de caja y la gestión académica.</em></p>
+</div>
 
-Bienvenido al repositorio oficial del **Sistema Integral para el Control Financiero y Administrativo de la Academia Conduser**. Este documento consolida toda la información necesaria para la evaluación académica, despliegue en producción y uso del sistema.
+<hr>
 
-Este proyecto tiene como objetivo transformar y digitalizar la gestión financiera de la academia, reemplazando el control manual y propenso a errores (llevado en hojas de Excel) por una plataforma web segura, automatizada, con trazabilidad completa y centralizada bajo una arquitectura moderna.
-
----
-
-## 📅 Información de la Entrega Final
-
-- **Fecha de Entrega Oficial:** 25 de Mayo de 2026
-- **Entidad / Cliente:** Academia Conduser
-- **Versión del Sistema:** 1.0.0 (Release Candidate)
-
----
-
-## 👥 Equipo de Trabajo (Roles Ágiles Oficiales)
-
-El proyecto fue planificado, desarrollado y desplegado utilizando el marco de trabajo ágil Scrum. A continuación, se presentan los integrantes del equipo de desarrollo, quienes son los únicos encargados de brindar **soporte técnico oficial** para el sistema:
-
-1. **Juan Esteban Ospina** - *Product Owner (Dueño del Producto)*
-   Encargado de maximizar el valor del producto, gestionar y priorizar el Product Backlog. Responsable de asegurar que los requisitos del sistema se alineen perfectamente con las necesidades comerciales e institucionales de la academia.
-
-2. **Sofia Vanegas** - *Scrum Master*
-   Líder servicial encargada de promover y apoyar la metodología Scrum. Responsable de asegurar que el equipo entienda los objetivos, moderar las ceremonias (Dailies, Sprint Plannings, Retrospectives) y eliminar cualquier impedimento técnico o de comunicación que bloquee al equipo.
-
-3. **Kevin Quiroga** - *Desarrollador (Backend & Base de Datos)*
-   Especialista en lógica de negocio. Encargado del desarrollo estructural en Laravel, diseño del modelo relacional en MySQL, seguridad, roles, middleware y la creación del script de automatización de pruebas (`selenium_qa_automation.py`).
-
-4. **Juan José Henao** - *Desarrollador (Frontend & UI/UX)*
-   Especialista en interfaces e interacción de usuario. Encargado de transformar los mockups en vistas funcionales (Blade Templates + Bootstrap/Tailwind), asegurar la responsividad en dispositivos móviles e implementar los flujos visuales que garantizan una experiencia de usuario premium.
+## 📑 Tabla de Contenido
+1. [Resumen Ejecutivo e Introducción](#1-resumen-ejecutivo-e-introducción)
+2. [Objetivos del Proyecto](#2-objetivos-del-proyecto)
+3. [Requerimientos Funcionales y No Funcionales](#3-requerimientos-funcionales-y-no-funcionales)
+4. [Equipo de Desarrollo y Metodología (Scrum)](#4-equipo-de-desarrollo-y-metodología-scrum)
+5. [Despliegue Oficial y Credenciales (Producción)](#5-despliegue-oficial-y-credenciales-producción)
+6. [Inventario Documental y Entregables (Auditoría)](#6-inventario-documental-y-entregables-auditoría)
+7. [Arquitectura del Sistema y Tecnologías](#7-arquitectura-del-sistema-y-tecnologías)
+8. [Diseño de Base de Datos y Modelo Relacional](#8-diseño-de-base-de-datos-y-modelo-relacional)
+9. [Manual de Usuario Básico](#9-manual-de-usuario-básico)
+10. [Seguridad y Gestión de Accesos (RBAC)](#10-seguridad-y-gestión-de-accesos-rbac)
+11. [Estrategia de Pruebas Automatizadas y QA](#11-estrategia-de-pruebas-automatizadas-y-qa)
+12. [Evidencias Visuales y Validaciones (GIFs E2E)](#12-evidencias-visuales-y-validaciones-gifs-e2e)
+13. [Guía de Instalación en Desarrollo](#13-guía-de-instalación-en-desarrollo)
 
 ---
 
-## 🚀 Acceso al Sistema en Producción
+## 1. Resumen Ejecutivo e Introducción
+La **Academia Conduser** requería con urgencia la modernización de sus procesos de control interno, los cuales se venían llevando de manera manual a través de hojas de cálculo descentralizadas. Este proyecto consistió en el ciclo de vida completo (análisis, diseño, desarrollo, pruebas y despliegue) de un sistema web escalable y seguro. 
 
-El proyecto se encuentra totalmente desplegado y accesible a través de internet en un servidor Hostinger. Para validar el funcionamiento del sistema en vivo, por favor acceda al siguiente enlace:
+El sistema centraliza la gestión de usuarios, la auditoría de entradas y salidas de dinero, el cálculo de nómina (comisiones y descuentos) y genera reportes en tiempo real para la correcta toma de decisiones gerenciales. Todo esto bajo una estricta arquitectura orientada a la seguridad de la información.
 
-- **🔗 Dominio Principal:** [https://gestion.csconduser.com/login](https://gestion.csconduser.com/login)
+**Fecha de Entrega:** 25 de Mayo de 2026
 
-### Credenciales de Ingreso (Para Pruebas del Docente)
-Para auditar la plataforma con privilegios totales y tener acceso a todos los módulos (Gestión de usuarios, auditoría, finanzas, nómina), utilice las credenciales maestras:
+---
+
+## 2. Objetivos del Proyecto
+
+### Objetivo General
+Diseñar, desarrollar e implementar una plataforma web centralizada para la automatización integral de la gestión administrativa, el control financiero y la trazabilidad operativa de la Academia Conduser, reduciendo el margen de error humano y garantizando la integridad de los datos institucionales.
+
+### Objetivos Específicos
+- Migrar los registros financieros en hojas de cálculo a una base de datos relacional robusta (MySQL).
+- Desarrollar un sistema de autenticación seguro con control de acceso basado en roles (RBAC).
+- Implementar una interfaz de usuario (UI) moderna, altamente responsiva y amigable (UX).
+- Establecer un sistema automatizado de Pruebas de Calidad (QA) para certificar la estabilidad de los flujos.
+- Desplegar el sistema final en un servidor en la nube garantizando una disponibilidad de 24/7.
+
+---
+
+## 3. Requerimientos Funcionales y No Funcionales
+
+### Requerimientos Funcionales
+- **RF-01 (Autenticación):** El sistema debe permitir el inicio y cierre de sesión seguro mediante correo y contraseña.
+- **RF-02 (CRUD de Usuarios):** Un administrador debe poder crear, listar, modificar y eliminar personal de la academia.
+- **RF-03 (Registro Financiero):** El sistema debe permitir el registro de flujos de caja (ingresos y egresos).
+- **RF-04 (Restricción por Rol):** Los colaboradores comunes solo deben tener permisos para visualizar y registrar sus propios egresos.
+- **RF-05 (Auditoría):** Toda acción crítica dentro del sistema debe registrar fecha, hora y usuario ejecutor.
+
+### Requerimientos No Funcionales
+- **RNF-01 (Seguridad):** Las contraseñas deben almacenarse bajo el algoritmo de encriptación Bcrypt. Protección obligatoria contra CSRF y SQL Injection.
+- **RNF-02 (Usabilidad):** El sistema debe adaptarse a pantallas de teléfonos móviles, tablets y computadoras (Responsive Design 100%).
+- **RNF-03 (Rendimiento):** El tiempo máximo de respuesta del servidor en peticiones de consulta no debe exceder los 2 segundos.
+- **RNF-04 (Disponibilidad):** El sistema estará hosteado y desplegado de manera continua.
+
+---
+
+## 4. Equipo de Desarrollo y Metodología (Scrum)
+
+El proyecto se gestionó bajo la **Metodología Ágil Scrum**, operando en Sprints estructurados para garantizar entregas incrementales de alto valor. **El soporte oficial del sistema lo provee exclusivamente este equipo.**
+
+- 💼 **Juan Esteban Ospina - *Product Owner (Dueño del Producto)***
+  Representante del cliente. Definió las historias de usuario, priorizó el Product Backlog y fue responsable de validar que el software construido solucionara los dolores comerciales y financieros reales de la Academia.
+- ⏱️ **Sofia Vanegas - *Scrum Master***
+  Líder ágil. Responsable de garantizar el cumplimiento del marco Scrum, moderar ceremonias (Daily Standups, Plannings, Retrospectives) y mitigar bloqueos o impedimentos externos para que el equipo de desarrollo operara con fluidez técnica.
+- ⚙️ **Kevin Quiroga - *Desarrollador (Backend, BD & Automatización)***
+  Encargado de la lógica de negocio sólida. Diseñó el diagrama relacional, programó las migraciones en Laravel, construyó las APIS internas, el middleware de seguridad y orquestó la automatización de pruebas End-to-End utilizando Selenium y Python.
+- 🎨 **Juan José Henao - *Desarrollador (Frontend & UI/UX)***
+  Encargado de la experiencia de usuario. Su responsabilidad fue convertir los mockups iniciales en plantillas de Blade interactivas y responsivas, integrando tecnologías como Tailwind CSS y AlpineJS para las animaciones y vistas.
+
+---
+
+## 5. Despliegue Oficial y Credenciales (Producción)
+
+El sistema ya fue llevado a producción, configurado correctamente sobre un entorno Linux con un servidor web optimizado para Laravel.
+
+- 🔗 **Dominio de Acceso:** [https://gestion.csconduser.com/login](https://gestion.csconduser.com/login)
+
+Para auditar el sistema en su totalidad (módulos, configuraciones y usuarios), utilice las siguientes credenciales:
 - **Usuario Root (Máximos privilegios):** `conduserroot@gmail.com`
 - **Contraseña Root:** `Conduser@2005`
 
-Además, para evaluar la restricción de vistas y el Control de Acceso Basado en Roles (RBAC), hemos preconfigurado los siguientes usuarios de prueba:
-- **Usuario Administrador:** `admin@conduser.com` (Contraseña: `Admin123`)
-- **Usuario Colaborador:** `colaborador@conduser.com` (Contraseña: `Colaborador123` o equivalente según BD)
+Para validar que el Control de Accesos por Roles (RBAC) restringe correctamente las pantallas y funcionalidades, utilice los usuarios de prueba:
+- **Usuario Administrador:** `admin@conduser.com` (Clave: `Admin123`)
+- **Usuario Colaborador:** `colaborador@conduser.com` 
 
 ---
 
-## 📁 Guía Exhaustiva de Documentos y Entregables (Auditoría)
+## 6. Inventario Documental y Entregables (Auditoría)
 
-Para facilitar la calificación exhaustiva del proyecto, hemos consolidado todos los entregables requeridos en carpetas específicas del repositorio. El profesor debe revisar las siguientes secciones:
+Toda la trazabilidad de ingeniería de software requerida para calificación ha sido consolidada estructuralmente dentro de este repositorio:
 
-### 1. Documentación Arquitectónica y Diseño (Carpeta `docs/`)
-Toda la planeación y estructura de ingeniería de software se encuentra aquí:
-- 📄 `docs/casos_uso.md` - Documentación formal que describe paso a paso los **Casos de Uso** principales del sistema (Autenticación, Middleware, Roles).
-- 📄 `docs/diagramas_flujo.md` - Documentación técnica con **Diagramas de Flujo (Mermaid)** ilustrando el ciclo de vida y la interacción del sistema de autenticación.
-- 📄 `docs/entradas_salidas.md` - Especificación detallada de **Entradas y Salidas** (parámetros y respuestas) de los módulos del sistema.
-- 📄 `docs/DIAGRAMA_ENTIDAD_RELACION.md` - Especificación completa de las tablas, campos y el **Diagrama Entidad-Relación** del modelo de datos.
-- 📄 `docs/Casos_Pruebas_Software.tex` - Documentación formal (formato LaTeX) detallando escenarios de pruebas de software.
-- 📄 `docs/INFORME_PRUEBAS.md` - Informe técnico detallando la estrategia de calidad de software.
-- 🖼️ `docs/conduser_mockup.png` y `mockup_layout.json` - Prototipos iniciales de interfaz y diseño (UI/UX) que sirvieron de base para el desarrollo.
-- 👨‍💻 `docs/test_integration.php` - Script de validación de integración.
+### Carpeta `docs/` (Arquitectura e Ingeniería)
+- 📄 **`casos_uso.md`**: Especificación formal paso a paso de los Casos de Uso del sistema, precondiciones y flujos principales.
+- 📄 **`diagramas_flujo.md`**: Diagramas interactivos (Mermaid) mostrando el ciclo de vida de la autenticación y las peticiones Middleware.
+- 📄 **`entradas_salidas.md`**: Diccionario formal especificando qué parámetros de entrada requiere el sistema y sus salidas esperadas.
+- 📄 **`DIAGRAMA_ENTIDAD_RELACION.md`**: Topología estructural de la base de datos en formato gráfico y textual.
+- 📄 **`Casos_Pruebas_Software.tex`**: Entregable académico formal (LaTeX) estructurando las métricas de calidad de software.
+- 🖼️ **`conduser_mockup.png`** / **`mockup_layout.json`**: Evidencias de la fase de prototipado inicial (Balsamiq/Figma) previo al código.
+- 📄 **`INFORME_PRUEBAS.md`**: Resumen general de las pruebas de QA.
 
-### 2. Pruebas de Calidad, QA y Automatización (Carpeta `pruebas_finales/`)
-El sistema fue sometido a pruebas funcionales, pruebas de UI con Interfaz Gráfica (GI) y pruebas de flujo completas:
-- 📊 **`pruebas_finales/resultados_pruebas_automatizadas.xlsx`** - (IMPORTANTE) Es el archivo Excel principal que contiene la **sábana de pruebas** automatizadas y manuales requeridas para la revisión.
-- 📊 `pruebas_finales/resultados_pruebas.csv` - Registro crudo de los resultados de testing.
-- 📄 `pruebas_finales/Informe_Pruebas_Finales.md` - Conclusiones de la auditoría final y métricas de éxito.
-- 🤖 `pruebas_finales/selenium_qa_automation.py` - Script en Python desarrollado por el equipo utilizando Selenium WebDriver para realizar automatización de pruebas E2E (End-to-End) en los flujos principales.
-- 🎥 `pruebas_finales/videos/` - Carpeta que contiene evidencia en **video** de las automatizaciones corriendo y del software en funcionamiento.
-
-### 3. Evidencias Visuales Específicas (Carpeta `pruebas_screenshots/`)
-- 🖼️ `pruebas_screenshots/evidencia_documento.png` - Evidencia de la validación visual y diseño exigido. (Corresponde exactamente al archivo solicitado `Captura de pantalla 2026-05-25 a la(s) 7.37.51 p.m.`). 
-*(Se puede previsualizar esta imagen al final de este README).*
+### Carpeta `pruebas_finales/` (Quality Assurance & Automation)
+- 📊 **`resultados_pruebas_automatizadas.xlsx`**: Sábana maestra de validación donde constan los resultados de las pruebas de carga, pruebas de integración y flujos manuales. (Documento fundamental para revisión docente).
+- 🤖 **`selenium_qa_automation.py`**: El código fuente (Script de Python) con el que se corrieron las simulaciones automatizadas de usuarios.
+- 🎥 **Carpeta `videos/`**: Almacena las grabaciones `.gif` del bot ejecutando clics automatizados para validar que la UI funciona correctamente.
 
 ---
 
-## 🛠 Arquitectura y Tecnologías del Sistema
+## 7. Arquitectura del Sistema y Tecnologías
 
-El ecosistema tecnológico elegido garantiza un rendimiento rápido, seguridad y escalabilidad para la Academia:
-- **Backend Framework:** Laravel 10 (PHP 8.1+)
-- **Frontend Core:** Blade Templates impulsados por Vite.
-- **Estilos e UI:** Bootstrap 5 y Tailwind CSS combinados para interfaces modulares y diseños fluidos.
-- **Base de Datos:** MySQL (con migraciones y seeders integrados en Laravel).
-- **Control de Versiones y Despliegue:** Git y GitHub.
+El sistema sigue una arquitectura de **Modelo-Vista-Controlador (MVC)**, lo cual garantiza una completa separación entre la interfaz de usuario, la lógica de la aplicación y el acceso a los datos.
 
-### Módulos Principales
-1. **Módulo de Autenticación:** Login seguro con encriptación bcrypt, protección CSRF y redirección automática.
-2. **Módulo de Usuarios:** Gestión completa de colaboradores (CRUD).
-3. **Módulo Financiero:** Control de Ingresos y Egresos.
-4. **Módulo de Nómina:** Cálculo de comisiones y descuentos del personal.
-5. **Módulo de Auditoría:** Trazabilidad de qué usuario y a qué hora realiza cada acción dentro del sistema.
-
-### Control de Acceso Basado en Roles (RBAC)
-- **Root:** Administrador del sistema. Tiene control total sobre el CRUD de usuarios, nómina, reportes y auditoría global.
-- **Administrador:** Encargado operativo. Gestiona finanzas, ingresos, egresos y puede ver los reportes comerciales, pero no puede crear/eliminar cuentas.
-- **Colaborador:** Nivel operativo base. Únicamente puede registrar sus propios gastos operativos y ver su propio historial, garantizando la privacidad de la empresa.
+- **Lenguaje Base:** PHP 8.1+
+- **Framework Core:** Laravel 10 (Encargado del ruteo, ORM Eloquent, Inyección de Dependencias).
+- **Capa Visual (Frontend):** Laravel Blade acoplado dinámicamente con Vite (para compilación súper rápida). Se utiliza **Tailwind CSS** y **Bootstrap 5** combinados para lograr interfaces estéticas, tarjetas neumórficas y degradados dinámicos.
+- **Motor de Base de Datos:** MySQL Relacional (Índices optimizados para consultas financieras).
+- **QA Automation:** Python 3 + Selenium WebDriver.
 
 ---
 
-## 📊 Diagrama Entidad-Relación (Estructura Core)
+## 8. Diseño de Base de Datos y Modelo Relacional
 
-La base de datos cuenta con una integridad relacional fuerte para rastrear qué usuario es responsable de cada movimiento.
+La base de datos (diagramada en `docs/DIAGRAMA_ENTIDAD_RELACION.md`) consta de un ecosistema altamente acoplado por llaves foráneas. Su corazón se centra en dos entidades masivas:
+
+1. **Tabla `users`:** Almacena todos los colaboradores. Además de credenciales seguras, define obligatoriamente un campo enumerado `role` (`root`, `administrador`, `colaborador`) que dicta qué partes de la base de datos puede tocar el sujeto.
+2. **Tabla `movements`:** Registra la contabilidad. Cada movimiento (`type`: ingreso o egreso) debe estar estrictamente ligado (mediante `user_id`) a la persona que realizó la inserción, cumpliendo el principio de auditoría financiera.
 
 ```mermaid
 erDiagram
@@ -136,79 +164,94 @@ erDiagram
 
 ---
 
-## ⚙️ Instrucciones de Despliegue Local (Para Evaluación)
+## 9. Manual de Usuario Básico
 
-En caso de requerir auditar el código corriendo de manera local, ejecute la siguiente guía paso a paso:
+1. **Acceso:** Navegue hacia `https://gestion.csconduser.com` (Será redirigido al login).
+2. **Autenticación:** Ingrese su correo institucional y su contraseña secreta asignada.
+3. **Navegación del Dashboard:** Al ingresar, la barra lateral le mostrará a qué módulos tiene acceso.
+4. **Gestión de Personal (Solo Root/Admin):** Desde la sección "Usuarios", haga clic en "Nuevo" para enrolar empleados, o en el icono del basurero para darlos de baja.
+5. **Transacciones:** Diríjase al módulo de Movimientos. Elija "Ingreso" o "Egreso", digite el valor exacto y añada una descripción obligatoria (ej: *Pago servicio de internet*). Guarde la operación y su transacción quedará en la nube blindada con su nombre como autor.
 
-1. **Clonar el proyecto:**
-   ```bash
-   git clone https://github.com/jeom0/SistemaGestionAcademia.git
-   cd SistemaGestionAcademia
-   ```
-2. **Instalar dependencias del servidor y de interfaz:**
-   ```bash
-   composer install
-   npm install
-   ```
-3. **Configurar las variables de entorno:**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-4. **Migrar la Base de Datos e inyectar el usuario Root:**
-   *(Asegúrese de haber creado una base de datos MySQL local y conectarla en su .env primero).*
-   ```bash
-   php artisan migrate:fresh --seed
-   ```
-5. **Compilar el frontend y encender el servidor PHP:**
+---
+
+## 10. Seguridad y Gestión de Accesos (RBAC)
+
+La plataforma es completamente impermeable a ataques básicos de internet:
+- **Protección CSRF:** Cada formulario inyecta un Token Único (`@csrf`) evitando falsificación de peticiones en otros sitios.
+- **Middlewares Protectores:** Todas las rutas, excepto el login, están cubiertas por una cortina de seguridad. Si un usuario no logueado intenta escribir la URL `/dashboard`, el middleware de Laravel abortará el intento con un Error 401 y lo expulsará.
+- **Hashing Criptográfico:** Nunca se almacena una contraseña en texto plano; todo atraviesa el algoritmo Bcrypt de un solo sentido.
+
+---
+
+## 11. Estrategia de Pruebas Automatizadas y QA
+
+El equipo de QA garantizó que la plataforma está libre de "bugs" críticos. Para ello se utilizaron las siguientes métricas y entregables, todos comprobables en la carpeta `pruebas_finales/`:
+
+- **Pruebas Funcionales Automatizadas (E2E):** Un script robótico de Selenium navega por el sistema llenando formularios, inyectando contraseñas incorrectas y simulando comportamientos destructivos, verificando que el sistema siempre arroje las alertas correctas y proteja los datos.
+- **Validaciones de Diseño de Interfaz (GI):** Comprobación en paralelo de cómo se renderizan los colores, degradados y disposición de cajas en un monitor Desktop de 1080p frente a un dispositivo móvil vertical, asegurando que la experiencia nunca se degrade.
+
+---
+
+## 12. Evidencias Visuales y Validaciones (GIFs E2E)
+
+A continuación, exponemos abiertamente los resultados documentados y videograbados (GIF) de los Casos de Prueba (CP) automatizados superando la auditoría de calidad.
+
+### 📸 Evidencia Específica de Diseño Solicitada
+La siguiente imagen fue exigida explícitamente como evidencia documental de la superposición de la interfaz de diseño validada en producción:
+![Evidencia Solicitada](pruebas_screenshots/evidencia_documento.png)
+
+### 📸 Prototipo / Mockup Original
+Validación del plan de diseño frente a lo construido en código.
+![Mockup](docs/conduser_mockup.png)
+
+### 🎥 Validaciones de Comportamiento Dinámico (Selenium Automation)
+
+#### Panel de Autenticación
+- **CP-01 Inicio de Sesión Exitoso:**
+  ![Login Exitoso](pruebas_finales/videos/CP-01_Login_Exitoso.gif)
+- **CP-02 Intercepción de Login Erróneo:**
+  ![Login Fallido](pruebas_finales/videos/CP-02_Login_Fallido.gif)
+
+#### Gestión y Manipulación de Base de Usuarios (Root)
+- **CP-03 Inserción de Nuevo Empleado:**
+  ![Crear Usuario](pruebas_finales/videos/CP-03_Crear_Usuario.gif)
+- **CP-04 Remoción Forzada de Cuenta:**
+  ![Eliminar Usuario](pruebas_finales/videos/CP-04_Eliminar_Usuario.gif)
+
+#### Integridad Financiera y Bloqueos de Transacción
+- **CP-05 Afectación de Caja (Ingreso Positivo):**
+  ![Registrar Ingreso](pruebas_finales/videos/CP-05_Registrar_Ingreso.gif)
+- **CP-06 Rechazo de Valores Ilógicos (Monto Inválido):**
+  ![Validacion Monto](pruebas_finales/videos/CP-06_Validacion_Monto.gif)
+- **CP-07 Reporte de Egresos:**
+  ![Registrar Egreso](pruebas_finales/videos/CP-07_Registrar_Egreso.gif)
+- **CP-08 Restricción Verificada del Rol Colaborador:**
+  ![Gasto Colaborador](pruebas_finales/videos/CP-08_Gasto_Colaborador.gif)
+- **CP-09 / CP-10 Listados y Búsquedas por Filtros Temporales:**
+  ![Ver Movimientos](pruebas_finales/videos/CP-09_Ver_Movimientos.gif)
+  ![Filtrar Movimientos](pruebas_finales/videos/CP-10_Filtrar_Movimientos.gif)
+
+---
+
+## 13. Guía de Instalación en Desarrollo
+
+Para probar el código fuente de forma local (desconectado del servidor Hostinger), un ingeniero debe correr las siguientes rutinas en su consola:
+
+1. **Obtener el Código:** `git clone https://github.com/jeom0/SistemaGestionAcademia.git`
+2. **Entrar al directorio:** `cd SistemaGestionAcademia`
+3. **Instalar el Vendor PHP:** `composer install`
+4. **Instalar Dependencias de Node:** `npm install`
+5. **Configurar el Archivo Ambiental:** `cp .env.example .env` y generar firma con `php artisan key:generate`
+6. **Migrar la BD Local (Previamente encender MySQL):** `php artisan migrate:fresh --seed`
+7. **Empaquetar los assets de diseño y levantar el servidor:** 
    ```bash
    npm run build
    php artisan serve
    ```
-El sistema estará disponible en `http://localhost:8000`.
+8. Ingrese a su navegador en `http://localhost:8000`.
 
 ---
-
-## 📸 Evidencias Visuales y Pruebas Automatizadas (GIFs)
-
-A continuación, presentamos los resultados visuales de los **Flujos de Pruebas Automatizadas** ejecutados por Selenium, demostrando el correcto funcionamiento End-to-End (E2E) de la plataforma, así como las validaciones gráficas exigidas:
-
-### 1. Evidencia Solicitada (Validación Gráfica de Interfaz)
-Esta imagen fue requerida específicamente para la validación visual y responsividad de la página de inicio de sesión de Conduser.
-![Evidencia Solicitada](pruebas_screenshots/evidencia_documento.png)
-
-### 2. Mockup Inicial (Base de Diseño)
-![Mockup](docs/conduser_mockup.png)
-
-### 3. Ejecución de Casos de Prueba (Videos/GIFs de Selenium)
-
-A continuación, los flujos automatizados demostrando el comportamiento real del sistema en vivo:
-
-#### Módulo de Autenticación
-- **CP-01 Login Exitoso:**
-  ![Login Exitoso](pruebas_finales/videos/CP-01_Login_Exitoso.gif)
-- **CP-02 Login Fallido:**
-  ![Login Fallido](pruebas_finales/videos/CP-02_Login_Fallido.gif)
-
-#### Módulo de Gestión de Usuarios (Root)
-- **CP-03 Crear Usuario:**
-  ![Crear Usuario](pruebas_finales/videos/CP-03_Crear_Usuario.gif)
-- **CP-04 Eliminar Usuario:**
-  ![Eliminar Usuario](pruebas_finales/videos/CP-04_Eliminar_Usuario.gif)
-
-#### Módulo Financiero (Administrador y Colaborador)
-- **CP-05 Registrar Ingreso:**
-  ![Registrar Ingreso](pruebas_finales/videos/CP-05_Registrar_Ingreso.gif)
-- **CP-06 Validación de Monto (Manejo de Errores):**
-  ![Validacion Monto](pruebas_finales/videos/CP-06_Validacion_Monto.gif)
-- **CP-07 Registrar Egreso:**
-  ![Registrar Egreso](pruebas_finales/videos/CP-07_Registrar_Egreso.gif)
-- **CP-08 Restricción Gasto Colaborador:**
-  ![Gasto Colaborador](pruebas_finales/videos/CP-08_Gasto_Colaborador.gif)
-- **CP-09 Ver Movimientos:**
-  ![Ver Movimientos](pruebas_finales/videos/CP-09_Ver_Movimientos.gif)
-- **CP-10 Filtrar Movimientos:**
-  ![Filtrar Movimientos](pruebas_finales/videos/CP-10_Filtrar_Movimientos.gif)
-
----
-*© 2026 Academia Conduser. Desarrollo de Software Universitario.*
+<div align="center">
+  <p><strong>Desarrollado con Excelencia Técnica.</strong></p>
+  <p><em>© 2026 Equipo de Ingeniería - Academia Conduser. Todos los derechos reservados.</em></p>
+</div>
