@@ -5,7 +5,10 @@
 
     RewriteEngine On
 
-    # Redirige todo el tráfico a la carpeta public de Laravel
+    # Redirige la raíz exacta al login
+    RewriteRule ^/?$ public/login [L,R=301]
+
+    # Redirige el resto del tráfico a la carpeta public de Laravel
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L,QSA]
 </IfModule>
