@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen flex flex-col lg:flex-row antialiased" x-data="{ helpModalOpen: false }">
-    <!-- ==================== MOBILE HEADER ==================== -->
+    <!-- ==================== MOBILE HEADER (NEW) ==================== -->
     <div class="lg:hidden w-full h-[35vh] sm:h-[45vh] relative overflow-hidden shrink-0">
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
         <div class="absolute inset-0 bg-emerald-950/30 z-10"></div>
@@ -14,17 +14,22 @@
     </div>
 
     <!-- ==================== DESKTOP HEADER (Original Intact) ==================== -->
-    <div class="hidden lg:block w-[55%] h-auto relative overflow-hidden shrink-0">
+    <div class="hidden lg:flex w-[55%] relative overflow-hidden shrink-0">
+        <!-- Base Background (Green waves + original cards) -->
         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/login_bg.png') }}');"></div>
+        
+        <!-- Abstract shadow mask to integrate UI premium texture -->
         <div class="absolute inset-0 bg-emerald-950/20 z-10 pointer-events-none"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-surface/20 to-surface z-20 pointer-events-none"></div>
-        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface z-40 pointer-events-none"></div>
+
+        <!-- Smooth white gradient transition at the right edge to integrate with form -->
+        <div class="absolute inset-y-0 right-0 w-[80%] bg-gradient-to-r from-transparent via-surface/70 to-surface z-20 pointer-events-none"></div>
+
+        <!-- Overlay Background (High quality transparent cards, perfectly aligned, ON TOP of gradient) -->
+        <div class="absolute inset-0 bg-cover bg-center z-30 pointer-events-none" style="background-image: url('{{ asset('images/login_bg1.png') }}');"></div>
     </div>
 
     <!-- Right Column: Login Form -->
-    <!-- Mobile: -mt-10 vertical overlap. Desktop: perfect side-by-side (NO overlap) -->
-    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 lg:-ml-0 rounded-t-[2.5rem] lg:rounded-none shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-none">
+    <div class="w-full lg:w-[45%] flex-1 bg-surface flex flex-col items-center justify-center p-8 md:p-16 relative z-50 -mt-10 lg:mt-0 rounded-t-[2.5rem] lg:rounded-none shadow-[0_-15px_30px_rgba(0,0,0,0.15)] lg:shadow-none">
         <div class="w-full max-w-md">
             
             <!-- ==================== MOBILE LOGO ==================== -->
