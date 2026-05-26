@@ -1,6 +1,7 @@
 <div align="center">
   <h1>🎓 Sistema Integral para el Control Financiero y Administrativo</h1>
-  <h3>Proyecto de Grado / Desarrollo de Software - Academia Conduser</h3>
+  <h3>Proyecto / Desarrollo de Software - Academia Conduser</h3>
+  <h3>Desplegado en https://gestion.csconduser.com/login</h3>
   <p><em>Un ecosistema tecnológico robusto para la automatización, seguridad y trazabilidad de los flujos de caja y la gestión académica.</em></p>
 </div>
 
