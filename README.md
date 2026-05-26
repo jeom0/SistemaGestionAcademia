@@ -166,11 +166,46 @@ El sistema estará disponible en `http://localhost:8000`.
 
 ---
 
-## 📸 Evidencia Visual Requerida Adjunta
+## 📸 Evidencias Visuales y Pruebas Automatizadas (GIFs)
 
-Tal como se solicitó para la entrega, la captura de validación gráfica de la plataforma:
+A continuación, presentamos los resultados visuales de los **Flujos de Pruebas Automatizadas** ejecutados por Selenium, demostrando el correcto funcionamiento End-to-End (E2E) de la plataforma, así como las validaciones gráficas exigidas:
 
-![Evidencia Solicitada (Diseño Validado)](pruebas_screenshots/evidencia_documento.png)
+### 1. Evidencia Solicitada (Validación Gráfica de Interfaz)
+Esta imagen fue requerida específicamente para la validación visual y responsividad de la página de inicio de sesión de Conduser.
+![Evidencia Solicitada](pruebas_screenshots/evidencia_documento.png)
+
+### 2. Mockup Inicial (Base de Diseño)
+![Mockup](docs/conduser_mockup.png)
+
+### 3. Ejecución de Casos de Prueba (Videos/GIFs de Selenium)
+
+A continuación, los flujos automatizados demostrando el comportamiento real del sistema en vivo:
+
+#### Módulo de Autenticación
+- **CP-01 Login Exitoso:**
+  ![Login Exitoso](pruebas_finales/videos/CP-01_Login_Exitoso.gif)
+- **CP-02 Login Fallido:**
+  ![Login Fallido](pruebas_finales/videos/CP-02_Login_Fallido.gif)
+
+#### Módulo de Gestión de Usuarios (Root)
+- **CP-03 Crear Usuario:**
+  ![Crear Usuario](pruebas_finales/videos/CP-03_Crear_Usuario.gif)
+- **CP-04 Eliminar Usuario:**
+  ![Eliminar Usuario](pruebas_finales/videos/CP-04_Eliminar_Usuario.gif)
+
+#### Módulo Financiero (Administrador y Colaborador)
+- **CP-05 Registrar Ingreso:**
+  ![Registrar Ingreso](pruebas_finales/videos/CP-05_Registrar_Ingreso.gif)
+- **CP-06 Validación de Monto (Manejo de Errores):**
+  ![Validacion Monto](pruebas_finales/videos/CP-06_Validacion_Monto.gif)
+- **CP-07 Registrar Egreso:**
+  ![Registrar Egreso](pruebas_finales/videos/CP-07_Registrar_Egreso.gif)
+- **CP-08 Restricción Gasto Colaborador:**
+  ![Gasto Colaborador](pruebas_finales/videos/CP-08_Gasto_Colaborador.gif)
+- **CP-09 Ver Movimientos:**
+  ![Ver Movimientos](pruebas_finales/videos/CP-09_Ver_Movimientos.gif)
+- **CP-10 Filtrar Movimientos:**
+  ![Filtrar Movimientos](pruebas_finales/videos/CP-10_Filtrar_Movimientos.gif)
 
 ---
 *© 2026 Academia Conduser. Desarrollo de Software Universitario.*
