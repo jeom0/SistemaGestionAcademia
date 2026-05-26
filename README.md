@@ -39,11 +39,13 @@ El proyecto se encuentra totalmente desplegado y accesible a través de internet
 - **🔗 Dominio Principal:** [https://gestion.csconduser.com/login](https://gestion.csconduser.com/login)
 
 ### Credenciales de Ingreso (Para Pruebas del Docente)
-Para auditar la plataforma con privilegios totales y tener acceso a todos los módulos (Gestión de usuarios, auditoría, finanzas, nómina), utilice las siguientes credenciales maestras:
-- **Usuario (Correo):** `root@conduser.com`
-- **Contraseña:** `password123`
+Para auditar la plataforma con privilegios totales y tener acceso a todos los módulos (Gestión de usuarios, auditoría, finanzas, nómina), utilice las credenciales maestras:
+- **Usuario Root (Máximos privilegios):** `conduserroot@gmail.com`
+- **Contraseña Root:** `Conduser@2005`
 
-*(Nota: Dentro del sistema, o usando los Excels de prueba, puede acceder o crear otros usuarios para validar la restricción de vistas de los roles Administrador y Colaborador).*
+Además, para evaluar la restricción de vistas y el Control de Acceso Basado en Roles (RBAC), hemos preconfigurado los siguientes usuarios de prueba:
+- **Usuario Administrador:** `admin@conduser.com` (Contraseña: `Admin123`)
+- **Usuario Colaborador:** `colaborador@conduser.com` (Contraseña: `Colaborador123` o equivalente según BD)
 
 ---
 
